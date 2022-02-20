@@ -8,6 +8,9 @@
 #include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "TransformComponent.h"
+#include "RenderComponent.h"
+#include "TextComponent.h"
 
 using namespace std;
 
@@ -69,6 +72,12 @@ void dae::Minigin::LoadGame() const
 	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
 	to->SetPosition(80, 20);
 	scene.Add(to);
+
+	auto gameObject = std::make_shared<GameObject>();
+	gameObject->AddComponent<TransformComponent>(new TransformComponent{ gameObject.get(), glm::vec2{50,50}});
+	gameObject->AddComponent<RenderComponent>(new RenderComponent(gameObject.get()));
+	gameObject->AddComponent<TextComponent>(new TextComponent{ gameObject.get(), "poepie", font.get()});
+	//I dont get it
 }
 
 void dae::Minigin::Cleanup()

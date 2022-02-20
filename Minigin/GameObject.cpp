@@ -25,3 +25,24 @@ void dae::GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
 }
+
+template <typename T> 
+void dae::GameObject::AddComponent(T* pComponent)
+{
+	m_pComponents.push_back(pComponent);
+}
+
+template <typename T> 
+T* dae::GameObject::GetComponent() const
+{
+	for(Component * c : m_pComponents)
+		if (dynamic_cast<T>(*c))
+			return (T*)c;
+	return nullptr;
+}
+
+template <typename T> 
+void dae::GameObject::RemoveComponent()
+{
+	
+}
