@@ -13,7 +13,7 @@ RenderComponent::RenderComponent(dae::Texture2D* pTexture, TransformComponent* p
 
 void RenderComponent::Update(float)
 {
-	Render();
+	
 }
 
 void RenderComponent::Render() const

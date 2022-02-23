@@ -75,7 +75,7 @@ void dae::Minigin::LoadGame() const
 
 	go = std::make_shared<GameObject>();
 	go->AddComponent<TextComponent>(new TextComponent{ go,"Test", font.get() });
-	go->AddComponent<TransformComponent>(new TransformComponent{ go, glm::vec2{100,100} });
+	go->AddComponent<TransformComponent>(new TransformComponent{ go, glm::vec2{80,20} });
 	go->AddComponent<RenderComponent>(new RenderComponent{ go->GetComponent<TextComponent>()->GetTexture(), go->GetComponent<TransformComponent>(), go });
 	scene.Add(go);
 }

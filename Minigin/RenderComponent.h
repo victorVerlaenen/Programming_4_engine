@@ -13,13 +13,13 @@ public:
 	~RenderComponent() override = default;
 
 	void Update(float deltaTime) override;
+	void Render() const override;
 
 	RenderComponent(const RenderComponent& other) = delete;
 	RenderComponent(RenderComponent&& other) = delete;
 	RenderComponent& operator=(const RenderComponent& other) = delete;
 	RenderComponent& operator=(RenderComponent&& other) = delete;
 	
-	void Render() const;
 	void SetTexture(dae::Texture2D* pTexture);
 private:
 	dae::Texture2D* m_pTexture;
