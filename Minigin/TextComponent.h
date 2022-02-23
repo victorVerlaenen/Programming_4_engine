@@ -20,8 +20,9 @@ public:
 	void SetText(const std::string& text);
 	dae::Texture2D* GetTexture() const;
 private:
-	float m_NeedsUpdate;
+	bool m_NeedsUpdate{true};
 	std::string m_Text;
 	dae::Font* m_pFont;
 	dae::Texture2D* m_TextTexture;
+
 };

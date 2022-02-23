@@ -20,7 +20,12 @@ void RenderComponent::Render() const
 {
 	if (m_pTexture != nullptr)
 	{
-		const glm::vec2 pos = m_pTransform->GetPosition();
+		const glm::vec2& pos = m_pTransform->GetPosition();
 		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
+}
+
+void RenderComponent::SetTexture(dae::Texture2D* pTexture)
+{
+	m_pTexture = pTexture;
 }

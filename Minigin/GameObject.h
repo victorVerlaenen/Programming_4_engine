@@ -31,8 +31,11 @@ namespace dae
 		T* GetComponent() const
 		{
 			for (auto pComp : m_pComponents)
-				if (dynamic_cast<T*>(pComp))
-					return pComp;
+			{
+				T* obj = dynamic_cast<T*>(pComp);
+				if (obj)
+					return obj;
+			}
 			return nullptr;
 		}
 		template <typename T>

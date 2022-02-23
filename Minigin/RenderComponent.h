@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "GameObject.h"
+#include "Texture2D.h"
 #include "TransformComponent.h"
 
 //Renders the texture
@@ -19,6 +20,7 @@ public:
 	RenderComponent& operator=(RenderComponent&& other) = delete;
 	
 	void Render() const;
+	void SetTexture(dae::Texture2D* pTexture);
 private:
 	dae::Texture2D* m_pTexture;
 	TransformComponent* m_pTransform;
