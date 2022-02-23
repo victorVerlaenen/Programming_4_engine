@@ -2,7 +2,7 @@
 #include "TransformComponent.h"
 #include "Component.h"
 
-TransformComponent::TransformComponent(dae::GameObject* pOwner, const glm::vec2& position)
+TransformComponent::TransformComponent(std::shared_ptr<dae::GameObject> pOwner, const glm::vec2& position)
 	:Component{pOwner}
 	,m_Position{position}
 {

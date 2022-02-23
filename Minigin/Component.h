@@ -4,10 +4,10 @@
 class Component
 {
 public:
-	Component(dae::GameObject* pOwner);
+	Component(std::shared_ptr<dae::GameObject> pOwner);
 	virtual ~Component() = default;
 
 	virtual void Update(float deltaTime) = 0;
 protected:
-	dae::GameObject* m_pOwner;
+	std::weak_ptr<dae::GameObject> m_pOwner;
 };

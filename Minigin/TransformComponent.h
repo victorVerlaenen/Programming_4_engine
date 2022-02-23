@@ -1,15 +1,15 @@
 #pragma once
 #include "Component.h"
-#include "glm/glm.hpp"
+#include "GameObject.h"
 
+//Holds the transform
 class TransformComponent : public Component
 {
 public:
-	TransformComponent(dae::GameObject* pOwner, const glm::vec2& position);
-	virtual ~TransformComponent() = default;
+	TransformComponent(std::shared_ptr<dae::GameObject> pOwner, const glm::vec2& position);
+	virtual ~TransformComponent() override = default;
 
-
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
 	TransformComponent(const TransformComponent& other) = delete;
 	TransformComponent(TransformComponent&& other) = delete;

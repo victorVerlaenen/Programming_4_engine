@@ -1,15 +1,16 @@
 #pragma once
 #include "Component.h"
 #include "Font.h"
+#include "GameObject.h"
 
-class Font;
+//Makes the texture from text
 class TextComponent : public Component
 {
 public:
-	TextComponent(dae::GameObject* pOwner, const std::string& text, dae::Font* pFont);
-	virtual ~TextComponent() = default;
+	TextComponent(std::shared_ptr<dae::GameObject> pOwner, const std::string& text, dae::Font* pFont);
+	virtual ~TextComponent() override = default;
 
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
 	TextComponent(const TextComponent& other) = delete;
 	TextComponent(TextComponent&& other) = delete;
@@ -17,9 +18,10 @@ public:
 	TextComponent& operator=(TextComponent&& other) = delete;
 
 	void SetText(const std::string& text);
-	std::shared_ptr<dae::Texture2D> GetTexture() const;
+	dae::Texture2D* GetTexture() const;
 private:
+	float m_NeedsUpdate;
 	std::string m_Text;
 	dae::Font* m_pFont;
-	std::shared_ptr<dae::Texture2D> m_TextTexture;
+	dae::Texture2D* m_TextTexture;
 };

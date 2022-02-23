@@ -2,9 +2,9 @@
 #include "Transform.h"
 #include "SceneObject.h"
 
+class Component;
 namespace dae
 {
-	class Component;
 	class Texture2D;
 
 	// todo: this should become final.
@@ -17,9 +17,33 @@ namespace dae
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
-		template <typename T> void AddComponent(T* component);
-		template <typename T> T* GetComponent() const;
-		template <typename T> void RemoveComponent();
+
+
+		template <typename T>
+		void AddComponent(T* pComponent)
+		{
+			for (auto pComp : m_pComponents)
+				if (dynamic_cast<T*>(pComp))
+					return;
+			m_pComponents.push_back(pComponent);
+		}
+		template <typename T>
+		T* GetComponent() const
+		{
+			for (auto pComp : m_pComponents)
+				if (dynamic_cast<T*>(pComp))
+					return pComp;
+			return nullptr;
+		}
+		template <typename T>
+		void RemoveComponent()
+		{
+			for (int i{}; i < m_pComponents.size(); ++i)
+				if (dynamic_cast<T>(*m_pComponents[i]))
+					m_pComponents.erase(m_pComponents.begin() + i);
+		}
+
+
 
 		GameObject() = default;
 		virtual ~GameObject();

@@ -73,11 +73,11 @@ void dae::Minigin::LoadGame() const
 	to->SetPosition(80, 20);
 	scene.Add(to);
 
-	auto gameObject = std::make_shared<GameObject>();
-	gameObject->AddComponent<TransformComponent>(new TransformComponent{ gameObject.get(), glm::vec2{50,50}});
-	gameObject->AddComponent<RenderComponent>(new RenderComponent(gameObject.get()));
-	gameObject->AddComponent<TextComponent>(new TextComponent{ gameObject.get(), "poepie", font.get()});
-	//I dont get it
+	go = std::make_shared<GameObject>();
+	go->AddComponent<TextComponent>(new TextComponent{ go,"Test", font.get() });
+	go->AddComponent<TransformComponent>(new TransformComponent{ go, glm::vec2{20,20} });
+	go->AddComponent<RenderComponent>(new RenderComponent{ go->GetComponent<TextComponent>()->GetTexture(), go->GetComponent<TransformComponent>(), go });
+	scene.Add(go);
 }
 
 void dae::Minigin::Cleanup()

@@ -1,8 +1,8 @@
 #include "MiniginPCH.h"
 #include "Component.h"
-#include "GameObject.h"
 
-Component::Component(dae::GameObject* pOwner)
+Component::Component(std::shared_ptr<dae::GameObject> pOwner)
+	:m_pOwner{pOwner}
 {
-	m_pOwner = pOwner;
+	
 }
