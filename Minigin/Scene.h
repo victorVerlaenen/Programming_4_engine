@@ -11,6 +11,7 @@ namespace dae
 		void Add(const std::shared_ptr<SceneObject>& object);
 
 		void Update(float deltaTime);
+		void FixedUpdate(float fixedTimeStep);
 		void Render() const;
 
 		~Scene();

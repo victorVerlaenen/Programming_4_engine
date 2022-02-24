@@ -22,6 +22,12 @@
     <Filter Include="Component Files\TextComponent">
       <UniqueIdentifier>{ac9c3f2c-d9fb-4b34-97f8-ffdfd62780b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component Files\FPSComponent">
+      <UniqueIdentifier>{590edf47-9237-4baf-b1e4-f7302b06d114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Minigin Files\Time">
+      <UniqueIdentifier>{af87e328-cfa5-4394-978f-4282acbe7def}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -78,6 +84,12 @@
     <ClInclude Include="TextComponent.h">
       <Filter>Component Files\TextComponent</Filter>
     </ClInclude>
+    <ClInclude Include="FPSComponent.h">
+      <Filter>Component Files\FPSComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Minigin Files\Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -130,6 +142,12 @@
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
       <Filter>Component Files\TextComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSComponent.cpp">
+      <Filter>Component Files\FPSComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Minigin Files\Time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

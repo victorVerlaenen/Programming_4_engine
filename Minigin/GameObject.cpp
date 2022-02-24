@@ -6,13 +6,28 @@
 #include "RenderComponent.h"
 #include "Renderer.h"
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::~GameObject()
+{
+	for(auto& pComp : m_pComponents)
+	{
+		delete pComp;
+		pComp = nullptr;
+	}
+}
 
 void dae::GameObject::Update(float deltaTime)
 {
 	for (const auto pComp : m_pComponents)
 	{
 		pComp->Update(deltaTime);
+	}
+}
+
+void dae::GameObject::FixedUpdate(float fixedTimeStep)
+{
+	for (const auto pComp : m_pComponents)
+	{
+		pComp->FixedUpdate(fixedTimeStep);
 	}
 }
 

@@ -1,6 +1,5 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
-#include "Component.h"
 
 TransformComponent::TransformComponent(std::shared_ptr<dae::GameObject> pOwner, const glm::vec2& position)
 	:Component{pOwner}
@@ -12,6 +11,11 @@ TransformComponent::TransformComponent(std::shared_ptr<dae::GameObject> pOwner, 
 void TransformComponent::Update(float)
 {
 
+}
+
+void TransformComponent::FixedUpdate(float)
+{
+	
 }
 
 glm::vec2 TransformComponent::GetPosition() const

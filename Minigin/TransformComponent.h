@@ -10,6 +10,7 @@ public:
 	virtual ~TransformComponent() override = default;
 
 	void Update(float deltaTime) override;
+	void FixedUpdate(float fixedTimeStep) override;
 
 	TransformComponent(const TransformComponent& other) = delete;
 	TransformComponent(TransformComponent&& other) = delete;

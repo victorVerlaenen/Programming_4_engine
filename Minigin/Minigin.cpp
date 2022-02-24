@@ -8,7 +8,9 @@
 #include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
+
 #include "TransformComponent.h"
+#include "FPSComponent.h"
 #include "RenderComponent.h"
 #include "TextComponent.h"
 
@@ -72,11 +74,13 @@ void dae::Minigin::LoadGame() const
 	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
 	to->SetPosition(80, 20);
 	scene.Add(to);
-
+	
 	go = std::make_shared<GameObject>();
-	go->AddComponent<TextComponent>(new TextComponent{ go,"Test", font.get() });
-	go->AddComponent<TransformComponent>(new TransformComponent{ go, glm::vec2{80,20} });
-	go->AddComponent<RenderComponent>(new RenderComponent{ go->GetComponent<TextComponent>()->GetTexture(), go->GetComponent<TransformComponent>(), go });
+	auto fontFPS = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	go->AddComponent(new TextComponent{ go,"Test", fontFPS, SDL_Color{255, 255, 0}});
+	go->AddComponent(new FPSComponent{ go });
+	go->AddComponent(new TransformComponent{ go, glm::vec2{10,10} });
+	go->AddComponent(new RenderComponent{ go });
 	scene.Add(go);
 }
 
@@ -105,14 +109,23 @@ void dae::Minigin::Run()
 		// todo: this update loop could use some work.
 		bool doContinue = true;
 		auto lastTime = std::chrono::high_resolution_clock::now();
+		float lag = 0.f;
 		while (doContinue)
 		{
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
+			lag += deltaTime;
 
 			doContinue = input.ProcessInput();
+			while(lag >= m_FixedTimeStep)
+			{
+				sceneManager.FixedUpdate(m_FixedTimeStep);
+				lag -= m_FixedTimeStep;
+			}
 			sceneManager.Update(deltaTime);
 			renderer.Render();
+
+			lastTime = currentTime;
 		}
 	}
 

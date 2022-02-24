@@ -5,6 +5,7 @@ namespace dae
 	{
 	public:
 		virtual void Update(float deltaTime) = 0;
+		virtual void FixedUpdate(float fixedTimeStep) = 0;
 		virtual void Render() const = 0;
 
 		SceneObject() = default;

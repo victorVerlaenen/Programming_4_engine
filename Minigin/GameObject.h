@@ -12,13 +12,14 @@ namespace dae
 	{
 	public:
 		void Update(float deltaTime) override;
+		void FixedUpdate(float fixedTimeStep) override;
 		void Render() const override;
 
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 
-
+		
 		template <typename T>
 		void AddComponent(T* pComponent)
 		{
