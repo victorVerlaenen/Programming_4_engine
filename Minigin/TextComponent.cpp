@@ -15,7 +15,7 @@ TextComponent::TextComponent(std::shared_ptr<dae::GameObject> pOwner, const std:
 
 }
 
-void TextComponent::Update(float)
+void TextComponent::Update()
 {
 	if (m_NeedsUpdate)
 	{
@@ -37,7 +37,7 @@ void TextComponent::Update(float)
 	}
 }
 
-void TextComponent::FixedUpdate(float)
+void TextComponent::FixedUpdate()
 {
 
 }

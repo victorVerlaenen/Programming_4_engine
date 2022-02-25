@@ -9,8 +9,8 @@ public:
 	TransformComponent(std::shared_ptr<dae::GameObject> pOwner, const glm::vec2& position);
 	virtual ~TransformComponent() override = default;
 
-	void Update(float deltaTime) override;
-	void FixedUpdate(float fixedTimeStep) override;
+	void Update( ) override;
+	void FixedUpdate( ) override;
 
 	TransformComponent(const TransformComponent& other) = delete;
 	TransformComponent(TransformComponent&& other) = delete;

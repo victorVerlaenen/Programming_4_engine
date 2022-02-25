@@ -10,8 +10,8 @@ public:
 	TextComponent(std::shared_ptr<dae::GameObject> pOwner, const std::string& text, std::shared_ptr<dae::Font> pFont, const SDL_Color& color);
 	virtual ~TextComponent() override = default;
 
-	void Update(float deltaTime) override;
-	void FixedUpdate(float fixedTimeStep) override;
+	void Update() override;
+	void FixedUpdate() override;
 
 	TextComponent(const TextComponent& other) = delete;
 	TextComponent(TextComponent&& other) = delete;

@@ -11,8 +11,8 @@ namespace dae
 	class GameObject : public SceneObject
 	{
 	public:
-		void Update(float deltaTime) override;
-		void FixedUpdate(float fixedTimeStep) override;
+		void Update() override;
+		void FixedUpdate() override;
 		void Render() const override;
 
 		void SetTexture(const std::string& filename);

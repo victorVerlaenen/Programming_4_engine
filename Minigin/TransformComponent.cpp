@@ -8,12 +8,12 @@ TransformComponent::TransformComponent(std::shared_ptr<dae::GameObject> pOwner, 
 
 }
 
-void TransformComponent::Update(float)
+void TransformComponent::Update()
 {
 
 }
 
-void TransformComponent::FixedUpdate(float)
+void TransformComponent::FixedUpdate()
 {
 	
 }

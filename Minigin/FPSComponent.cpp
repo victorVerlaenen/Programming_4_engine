@@ -7,9 +7,14 @@ FPSComponent::FPSComponent(std::shared_ptr<dae::GameObject> pOwner)
 
 }
 
-void FPSComponent::Update(float deltaTime)
+void FPSComponent::Update()
 {
-	m_FramesPerSecond = static_cast<int>(1 / deltaTime);
+	m_FramesPerSecond = static_cast<int>(1 / Time::GetInstance().GetDeltaTime());
 	//On hotcode path, need to check this
 	m_pOwner.lock()->GetComponent<TextComponent>()->SetText("FPS: " + std::to_string(m_FramesPerSecond));
+}
+
+void FPSComponent::FixedUpdate()
+{
+
 }

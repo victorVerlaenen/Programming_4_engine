@@ -10,12 +10,12 @@ RenderComponent::RenderComponent(std::shared_ptr<dae::GameObject> pOwner)
 
 }
 
-void RenderComponent::Update(float)
+void RenderComponent::Update()
 {
 	
 }
 
-void RenderComponent::FixedUpdate(float)
+void RenderComponent::FixedUpdate()
 {
 
 }

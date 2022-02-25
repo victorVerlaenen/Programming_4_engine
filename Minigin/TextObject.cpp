@@ -9,7 +9,7 @@ dae::TextObject::TextObject(const std::string& text, const std::shared_ptr<Font>
 	: m_NeedsUpdate(true), m_Text(text), m_Font(font), m_TextTexture(nullptr)
 { }
 
-void dae::TextObject::Update(float)
+void dae::TextObject::Update()
 {
 	if (m_NeedsUpdate)
 	{
@@ -28,6 +28,11 @@ void dae::TextObject::Update(float)
 		m_TextTexture = std::make_shared<Texture2D>(texture);
 		m_NeedsUpdate = false;
 	}
+}
+
+void dae::TextObject::FixedUpdate()
+{
+
 }
 
 void dae::TextObject::Render() const

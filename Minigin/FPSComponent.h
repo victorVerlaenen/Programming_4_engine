@@ -8,7 +8,8 @@ public:
 	FPSComponent(std::shared_ptr<dae::GameObject> pOwner);
 	~FPSComponent() override = default;
 
-	void Update(float deltaTime) override;
+	void Update() override;
+	void FixedUpdate() override;
 	void Render() const override {};
 
 	FPSComponent(const FPSComponent& other) = delete;

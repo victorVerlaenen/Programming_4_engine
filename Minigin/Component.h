@@ -7,8 +7,8 @@ public:
 	Component(std::shared_ptr<dae::GameObject> pOwner);
 	virtual ~Component() = default;
 
-	virtual void Update(float deltaTime) = 0;
-	virtual void FixedUpdate(float fixedTimeStep) = 0;
+	virtual void Update() = 0;
+	virtual void FixedUpdate() = 0;
 	virtual void Render() const{};
 protected:
 	std::weak_ptr<dae::GameObject> m_pOwner;

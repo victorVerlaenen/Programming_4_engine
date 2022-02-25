@@ -11,8 +11,8 @@ public:
 	RenderComponent(std::shared_ptr<dae::GameObject> pOwner);
 	~RenderComponent() override = default;
 
-	void Update(float deltaTime) override;
-	void FixedUpdate(float fixedTimeStep) override;
+	void Update() override;
+	void FixedUpdate() override;
 	void Render() const override;
 
 	RenderComponent(const RenderComponent& other) = delete;

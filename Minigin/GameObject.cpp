@@ -15,19 +15,19 @@ dae::GameObject::~GameObject()
 	}
 }
 
-void dae::GameObject::Update(float deltaTime)
+void dae::GameObject::Update()
 {
 	for (const auto pComp : m_pComponents)
 	{
-		pComp->Update(deltaTime);
+		pComp->Update();
 	}
 }
 
-void dae::GameObject::FixedUpdate(float fixedTimeStep)
+void dae::GameObject::FixedUpdate()
 {
 	for (const auto pComp : m_pComponents)
 	{
-		pComp->FixedUpdate(fixedTimeStep);
+		pComp->FixedUpdate();
 	}
 }
 
