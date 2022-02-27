@@ -93,28 +93,31 @@
     <ClInclude Include="Time.h">
       <Filter>Minigin Files\Time</Filter>
     </ClInclude>
-    <ClInclude Include="imconfig.h">
+    <ClInclude Include="Imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui.h">
+    <ClInclude Include="Imgui\imgui.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui_impl_opengl2.h">
+    <ClInclude Include="Imgui\imgui_impl_opengl2.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui_impl_sdl.h">
+    <ClInclude Include="Imgui\imgui_impl_sdl.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui_internal.h">
+    <ClInclude Include="Imgui\imgui_internal.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imstb_rectpack.h">
+    <ClInclude Include="Imgui\imstb_rectpack.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imstb_textedit.h">
+    <ClInclude Include="Imgui\imstb_textedit.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imstb_truetype.h">
+    <ClInclude Include="Imgui\imstb_truetype.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_plot.h">
       <Filter>Imgui</Filter>
     </ClInclude>
   </ItemGroup>
@@ -176,25 +179,28 @@
     <ClCompile Include="Time.cpp">
       <Filter>Minigin Files\Time</Filter>
     </ClCompile>
-    <ClCompile Include="imgui.cpp">
+    <ClCompile Include="Imgui\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_demo.cpp">
+    <ClCompile Include="Imgui\imgui_demo.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_draw.cpp">
+    <ClCompile Include="Imgui\imgui_draw.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_impl_opengl2.cpp">
+    <ClCompile Include="Imgui\imgui_impl_opengl2.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_impl_sdl.cpp">
+    <ClCompile Include="Imgui\imgui_impl_sdl.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_tables.cpp">
+    <ClCompile Include="Imgui\imgui_tables.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_widgets.cpp">
+    <ClCompile Include="Imgui\imgui_widgets.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_plot.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
   </ItemGroup>

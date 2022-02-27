@@ -43,7 +43,7 @@ void dae::Minigin::Initialize()
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		640,
-		480,
+		900,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr) 
@@ -61,11 +61,11 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
+	/*auto go = std::make_shared<GameObject>();
 	go->SetTexture("background.jpg");
-	scene.Add(go);
+	scene.Add(go);*/
 
-	go = std::make_shared<GameObject>();
+	auto go = std::make_shared<GameObject>();
 	go->SetTexture("logo.png");
 	go->SetPosition(216, 180);
 	scene.Add(go);
