@@ -77,10 +77,10 @@ void dae::Minigin::LoadGame() const
 	
 	go = std::make_shared<GameObject>();
 	auto fontFPS = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-	go->AddComponent(new TextComponent{ go,"Test", fontFPS, SDL_Color{255, 255, 0}});
-	go->AddComponent(new FPSComponent{ go });
-	go->AddComponent(new TransformComponent{ go, glm::vec2{10,10} });
-	go->AddComponent(new RenderComponent{ go });
+	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{10,10} });
+	go->AddComponent(new RenderComponent{ go.get() });
+	go->AddComponent(new TextComponent{ go.get() ,"Test", fontFPS, SDL_Color{255, 255, 0} });
+	go->AddComponent(new FPSComponent{ go.get() });
 	scene.Add(go);
 }
 

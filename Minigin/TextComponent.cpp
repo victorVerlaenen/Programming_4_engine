@@ -6,13 +6,14 @@
 #include "RenderComponent.h"
 #include <string>
 
-TextComponent::TextComponent(std::shared_ptr<dae::GameObject> pOwner, const std::string& text, std::shared_ptr<dae::Font> pFont, const SDL_Color& color)
+TextComponent::TextComponent(dae::GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> pFont, const SDL_Color& color)
 	:Component{ pOwner }
 	, m_Text{ text }
 	, m_pFont{ pFont }
 	, m_Color{color}
+	, m_pRenderComponent{ GetOwner()->GetComponent<RenderComponent>() }
 {
-
+	
 }
 
 void TextComponent::Update()
@@ -32,7 +33,7 @@ void TextComponent::Update()
 		SDL_FreeSurface(surf);
 
 		m_TextTexture = std::make_shared<dae::Texture2D>(texture);
-		m_pOwner.lock()->GetComponent<RenderComponent>()->SetTexture(m_TextTexture);
+		m_pRenderComponent->SetTexture(m_TextTexture);
 		m_NeedsUpdate = false;
 	}
 }
@@ -41,6 +42,12 @@ void TextComponent::FixedUpdate()
 {
 
 }
+
+void TextComponent::Render() const
+{
+	
+}
+
 
 void TextComponent::SetText(const std::string& text)
 {

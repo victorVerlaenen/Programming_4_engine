@@ -3,12 +3,13 @@
 #include "GameObject.h"
 #include "Texture2D.h"
 
-//Renders the texture
+class TransformComponent;
 class Texture2D;
+//Renders the texture
 class RenderComponent : public Component
 {
 public:
-	RenderComponent(std::shared_ptr<dae::GameObject> pOwner);
+	RenderComponent(dae::GameObject* pOwner);
 	~RenderComponent() override = default;
 
 	void Update() override;
@@ -23,4 +24,5 @@ public:
 	void SetTexture(std::shared_ptr<dae::Texture2D> pTexture);
 private:
 	std::shared_ptr<dae::Texture2D> m_pTexture;
+	TransformComponent* m_pTransformComponent;
 };

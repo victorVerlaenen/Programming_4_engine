@@ -6,11 +6,12 @@
 class TransformComponent : public Component
 {
 public:
-	TransformComponent(std::shared_ptr<dae::GameObject> pOwner, const glm::vec2& position);
-	virtual ~TransformComponent() override = default;
+	TransformComponent(dae::GameObject* pOwner, const glm::vec2& position);
+	~TransformComponent() override = default;
 
 	void Update( ) override;
 	void FixedUpdate( ) override;
+	void Render() const override;
 
 	TransformComponent(const TransformComponent& other) = delete;
 	TransformComponent(TransformComponent&& other) = delete;

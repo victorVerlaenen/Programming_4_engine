@@ -4,10 +4,11 @@
 #include "Renderer.h"
 #include "TransformComponent.h"
 
-RenderComponent::RenderComponent(std::shared_ptr<dae::GameObject> pOwner)
+RenderComponent::RenderComponent(dae::GameObject* pOwner)
 	:Component{pOwner}
+	,m_pTransformComponent{ GetOwner()->GetComponent<TransformComponent>() }
 {
-
+	
 }
 
 void RenderComponent::Update()
@@ -24,8 +25,7 @@ void RenderComponent::Render() const
 {
 	if (m_pTexture != nullptr)
 	{
-		//Again hotcode path, gotta check
-		const glm::vec2& pos = m_pOwner.lock()->GetComponent<TransformComponent>()->GetPosition();
+		const glm::vec2& pos = m_pTransformComponent->GetPosition();
 		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
 }
