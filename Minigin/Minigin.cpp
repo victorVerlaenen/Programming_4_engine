@@ -10,6 +10,7 @@
 
 #include "TransformComponent.h"
 #include "FPSComponent.h"
+#include "ImGuiComponent.h"
 #include "RenderComponent.h"
 #include "TextComponent.h"
 
@@ -60,24 +61,32 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
+	//TextureObject
 	auto go = std::make_shared<GameObject>();
 	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{216,180} });
 	go->AddComponent(new RenderComponent{ go.get(), "logo.png" });
 	scene.Add(go);
 
+	//TextObject
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	go = std::make_shared<GameObject>();
 	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{80,20} });
 	go->AddComponent(new RenderComponent{ go.get()});
 	go->AddComponent(new TextComponent{ go.get() , font, SDL_Color{255, 255, 255},"Programming 4 Assignment" });
 	scene.Add(go);
-	
+
+	//FPSCounterObject
 	go = std::make_shared<GameObject>();
 	auto fontFPS = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{10,10} });
 	go->AddComponent(new RenderComponent{ go.get() });
 	go->AddComponent(new TextComponent{ go.get() , fontFPS, SDL_Color{255, 255, 0},"Test" });
 	go->AddComponent(new FPSComponent{ go.get() });
+	scene.Add(go);
+
+	//ImGuiObject
+	go = std::make_shared<GameObject>();
+	go->AddComponent(new ImGuiComponent{ go.get(), m_Window });
 	scene.Add(go);
 }
 

@@ -31,6 +31,9 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{36324eb9-3596-42a8-8480-59f6c7797d87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component Files\ImGuiComponent">
+      <UniqueIdentifier>{d5e2c930-eadd-4408-ac41-efe33a7005e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -114,6 +117,9 @@
     <ClInclude Include="Imgui\imgui_plot.h">
       <Filter>Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ImGuiComponent.h">
+      <Filter>Component Files\ImGuiComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -193,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="Imgui\imgui_plot.cpp">
       <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiComponent.cpp">
+      <Filter>Component Files\ImGuiComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

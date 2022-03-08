@@ -33,7 +33,7 @@ void dae::GameObject::Render() const
 	//Gotta check if there is a beter solution to check this because a dynamic cast in hot code pad is not good
 	for (const auto pComp : m_pComponents)
 	{
-		if (dynamic_cast<RenderComponent*>(pComp))
+		//if (dynamic_cast<RenderComponent*>(pComp))
 			pComp->Render();
 	}
 }
