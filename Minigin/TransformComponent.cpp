@@ -1,35 +1,35 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent(dae::GameObject* pOwner, const glm::vec2& position)
+dae::TransformComponent::TransformComponent(GameObject* pOwner, const glm::vec2& position)
 	:Component{pOwner}
 	,m_Position{position}
 {
 
 }
 
-void TransformComponent::Update()
+void dae::TransformComponent::Update()
 {
 
 }
 
-void TransformComponent::FixedUpdate()
-{
-	
-}
-
-void TransformComponent::Render() const
+void dae::TransformComponent::FixedUpdate()
 {
 	
 }
 
+void dae::TransformComponent::Render() const
+{
+	
+}
 
-glm::vec2 TransformComponent::GetPosition() const
+
+glm::vec2 dae::TransformComponent::GetPosition() const
 {
 	return m_Position;
 }
 
-void TransformComponent::SetPosition(const glm::vec2& position)
+void dae::TransformComponent::SetPosition(const glm::vec2& position)
 {
 	m_Position = position;
 }

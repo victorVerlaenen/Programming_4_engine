@@ -2,26 +2,30 @@
 #include "RenderComponent.h"
 #include "Texture2D.h"
 #include "Renderer.h"
+#include "ResourceManager.h"
 #include "TransformComponent.h"
 
-RenderComponent::RenderComponent(dae::GameObject* pOwner)
+dae::RenderComponent::RenderComponent(GameObject* pOwner, const std::string& filename)
 	:Component{pOwner}
 	,m_pTransformComponent{ GetOwner()->GetComponent<TransformComponent>() }
 {
-	
+	if(!filename.empty())
+	{
+		m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	}
 }
 
-void RenderComponent::Update()
+void dae::RenderComponent::Update()
 {
 	
 }
 
-void RenderComponent::FixedUpdate()
+void dae::RenderComponent::FixedUpdate()
 {
 
 }
 
-void RenderComponent::Render() const
+void dae::RenderComponent::Render() const
 {
 	if (m_pTexture != nullptr)
 	{
@@ -30,7 +34,7 @@ void RenderComponent::Render() const
 	}
 }
 
-void RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
+void dae::RenderComponent::SetTexture(std::shared_ptr<Texture2D> pTexture)
 {
 	m_pTexture = pTexture;
 }

@@ -6,7 +6,7 @@
 #include "RenderComponent.h"
 #include <string>
 
-TextComponent::TextComponent(dae::GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> pFont, const SDL_Color& color)
+dae::TextComponent::TextComponent(GameObject* pOwner, std::shared_ptr<Font> pFont, const SDL_Color& color, const std::string& text)
 	:Component{ pOwner }
 	, m_Text{ text }
 	, m_pFont{ pFont }
@@ -16,7 +16,7 @@ TextComponent::TextComponent(dae::GameObject* pOwner, const std::string& text, s
 	
 }
 
-void TextComponent::Update()
+void dae::TextComponent::Update()
 {
 	if (m_NeedsUpdate)
 	{
@@ -38,24 +38,24 @@ void TextComponent::Update()
 	}
 }
 
-void TextComponent::FixedUpdate()
+void dae::TextComponent::FixedUpdate()
 {
 
 }
 
-void TextComponent::Render() const
+void dae::TextComponent::Render() const
 {
 	
 }
 
 
-void TextComponent::SetText(const std::string& text)
+void dae::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_NeedsUpdate = true;
 }
 
-dae::Texture2D* TextComponent::GetTexture() const
+dae::Texture2D* dae::TextComponent::GetTexture() const
 {
 	return m_TextTexture.get();
 }

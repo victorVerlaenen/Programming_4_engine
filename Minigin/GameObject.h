@@ -1,24 +1,16 @@
 #pragma once
 #include "Transform.h"
-#include "SceneObject.h"
+//#include "SceneObject.h"
 
-class Component;
 namespace dae
 {
-	class Texture2D;
-
-	// todo: this should become final.
-	class GameObject : public SceneObject
+	class Component;
+	class GameObject final
 	{
 	public:
-		void Update() override;
-		void FixedUpdate() override;
-		void Render() const override;
-
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
-
-
+		void Update();
+		void FixedUpdate();
+		void Render() const;
 		
 		template <typename T>
 		void AddComponent(T* pComponent)
@@ -46,9 +38,7 @@ namespace dae
 				if (dynamic_cast<T>(*m_pComponents[i]))
 					m_pComponents.erase(m_pComponents.begin() + i);
 		}
-
-
-
+		
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -57,9 +47,6 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_Transform;
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_Texture{};
 		std::vector<Component*> m_pComponents;
 	};
 }

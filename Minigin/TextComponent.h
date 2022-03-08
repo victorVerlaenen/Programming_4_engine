@@ -3,32 +3,35 @@
 #include "Font.h"
 #include "GameObject.h"
 
-class RenderComponent;
 
-//Makes the texture from text
-class TextComponent : public Component
+namespace dae
 {
-public:
-	TextComponent(dae::GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> pFont, const SDL_Color& color);
-	virtual ~TextComponent() override = default;
+	class RenderComponent;
+	class Texture2D;
+	class TextComponent : public Component
+	{
+	public:
+		TextComponent(GameObject* pOwner, std::shared_ptr<Font> pFont, const SDL_Color& color, const std::string& text = {});
+		virtual ~TextComponent() override = default;
 
-	void Update() override;
-	void FixedUpdate() override;
-	void Render() const override;
+		void Update() override;
+		void FixedUpdate() override;
+		void Render() const override;
 
-	TextComponent(const TextComponent& other) = delete;
-	TextComponent(TextComponent&& other) = delete;
-	TextComponent& operator=(const TextComponent& other) = delete;
-	TextComponent& operator=(TextComponent&& other) = delete;
+		TextComponent(const TextComponent& other) = delete;
+		TextComponent(TextComponent&& other) = delete;
+		TextComponent& operator=(const TextComponent& other) = delete;
+		TextComponent& operator=(TextComponent&& other) = delete;
 
-	void SetText(const std::string& text);
-	dae::Texture2D* GetTexture() const;
-private:
-	bool m_NeedsUpdate;
-	std::string m_Text;
-	const SDL_Color m_Color;
-	std::shared_ptr<dae::Font> m_pFont;
-	std::shared_ptr<dae::Texture2D> m_TextTexture;
-	RenderComponent* m_pRenderComponent;
+		void SetText(const std::string& text);
+		Texture2D* GetTexture() const;
+	private:
+		bool m_NeedsUpdate{ true };
+		std::string m_Text;
+		const SDL_Color m_Color;
+		std::shared_ptr<Font> m_pFont;
+		std::shared_ptr<Texture2D> m_TextTexture;
+		RenderComponent* m_pRenderComponent;
 
-};
+	};
+}

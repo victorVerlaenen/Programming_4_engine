@@ -5,7 +5,6 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
 
@@ -61,25 +60,23 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	/*auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
-	scene.Add(go);*/
-
 	auto go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(216, 180);
+	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{216,180} });
+	go->AddComponent(new RenderComponent{ go.get(), "logo.png" });
 	scene.Add(go);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to);
+	go = std::make_shared<GameObject>();
+	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{80,20} });
+	go->AddComponent(new RenderComponent{ go.get()});
+	go->AddComponent(new TextComponent{ go.get() , font, SDL_Color{255, 255, 255},"Programming 4 Assignment" });
+	scene.Add(go);
 	
 	go = std::make_shared<GameObject>();
 	auto fontFPS = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{10,10} });
 	go->AddComponent(new RenderComponent{ go.get() });
-	go->AddComponent(new TextComponent{ go.get() ,"Test", fontFPS, SDL_Color{255, 255, 0} });
+	go->AddComponent(new TextComponent{ go.get() , fontFPS, SDL_Color{255, 255, 0},"Test" });
 	go->AddComponent(new FPSComponent{ go.get() });
 	scene.Add(go);
 }

@@ -63,12 +63,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Minigin Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Minigin Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Minigin Files</Filter>
-    </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Minigin Files</Filter>
     </ClInclude>
@@ -150,9 +144,6 @@
       <Filter>Minigin Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Minigin Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextObject.cpp">
       <Filter>Minigin Files</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
