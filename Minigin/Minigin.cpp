@@ -68,7 +68,7 @@ void dae::Minigin::LoadGame() const
 	scene.Add(go);
 
 	//TextObject
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	go = std::make_shared<GameObject>();
 	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{80,20} });
 	go->AddComponent(new RenderComponent{ go.get()});
@@ -77,7 +77,7 @@ void dae::Minigin::LoadGame() const
 
 	//FPSCounterObject
 	go = std::make_shared<GameObject>();
-	auto fontFPS = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	const auto fontFPS = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	go->AddComponent(new TransformComponent{ go.get(), glm::vec2{10,10} });
 	go->AddComponent(new RenderComponent{ go.get() });
 	go->AddComponent(new TextComponent{ go.get() , fontFPS, SDL_Color{255, 255, 0},"Test" });
@@ -108,22 +108,24 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
-		auto& renderer = Renderer::GetInstance();
+		const auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
-		auto& input = InputManager::GetInstance();
+		const auto& input = InputManager::GetInstance();
 
-		// todo: this update loop could use some work.
 		bool doContinue = true;
 		auto lastTime = std::chrono::high_resolution_clock::now();
 		float lag = 0.f;
+		chrono::steady_clock::time_point currentTime{};
+		float deltaTime{ 0 };
 		while (doContinue)
 		{
-			auto currentTime = std::chrono::high_resolution_clock::now();
-			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
+			currentTime = std::chrono::high_resolution_clock::now();
+			deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
 			Time::GetInstance().SetDeltaTime(deltaTime);
 			lag += deltaTime;
 
 			doContinue = input.ProcessInput();
+			input.HandleInput();
 			while(lag >= Time::GetInstance().GetFixedDeltaTime())
 			{
 				sceneManager.FixedUpdate();

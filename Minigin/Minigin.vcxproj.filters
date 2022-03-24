@@ -34,6 +34,12 @@
     <Filter Include="Component Files\ImGuiComponent">
       <UniqueIdentifier>{d5e2c930-eadd-4408-ac41-efe33a7005e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{a8b4ea47-b6e5-425f-abd0-501d65f0a7db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{cbce368f-ce63-4051-b09c-8cb7f1789870}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -49,9 +55,6 @@
       <Filter>Minigin Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>Minigin Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
       <Filter>Minigin Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -120,15 +123,33 @@
     <ClInclude Include="ImGuiComponent.h">
       <Filter>Component Files\ImGuiComponent</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="DuckCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="FartCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="FireCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="XBoxOneController.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
       <Filter>Minigin Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Minigin Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
       <Filter>Minigin Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -202,6 +223,27 @@
     </ClCompile>
     <ClCompile Include="ImGuiComponent.cpp">
       <Filter>Component Files\ImGuiComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="DuckCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="FartCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="FireCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="XBoxOneController.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

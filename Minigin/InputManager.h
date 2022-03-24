@@ -1,24 +1,29 @@
 #pragma once
-#include <XInput.h>
 #include "Singleton.h"
+#include <memory>
+#include <vector>
+#include "XBoxOneController.h"
 
 namespace dae
 {
-	enum class ControllerButton
-	{
-		ButtonA,
-		ButtonB,
-		ButtonX,
-		ButtonY
-	};
-
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		bool ProcessInput();
-		bool IsPressed(ControllerButton button) const;
+		InputManager() = default;
+		~InputManager() override = default;
+		InputManager(const InputManager & other) = delete;
+		InputManager(InputManager && other) noexcept = delete;
+		InputManager& operator=(const InputManager & other) = delete;
+		InputManager& operator=(InputManager && other) noexcept = delete;
+
+		bool ProcessInput() const;
+		void HandleInput() const;
+		void AddController(unsigned controllerIndex);
+
+		void AddCommand(int controllerIdx, ButtonState state, ControllerButton button, std::unique_ptr<Command> command) const;
 	private:
-		XINPUT_STATE m_CurrentState{};
+		std::vector<std::unique_ptr<XBoxOneController>> m_Controllers{};
+		const int m_MaxControllers{ 4 };
 	};
 
 }

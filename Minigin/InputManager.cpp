@@ -1,10 +1,12 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
 
-bool dae::InputManager::ProcessInput()
+bool dae::InputManager::ProcessInput() const
 {
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentState);
+	for (int controllerIdx{ 0 }; controllerIdx < m_Controllers.size(); ++controllerIdx)
+	{
+		m_Controllers[controllerIdx]->ProcessInput();
+	}
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -22,19 +24,26 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-bool dae::InputManager::IsPressed(ControllerButton button) const
+
+void dae::InputManager::HandleInput() const
 {
-	switch (button)
+	for (int controllerIdx{ 0 }; controllerIdx < m_Controllers.size(); ++controllerIdx)
 	{
-	case ControllerButton::ButtonA:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A;
-	case ControllerButton::ButtonB:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_B;
-	case ControllerButton::ButtonX:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
-	case ControllerButton::ButtonY:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-	default: return false;
+		m_Controllers[controllerIdx]->HandleInput();
 	}
 }
 
+void dae::InputManager::AddController(unsigned controllerIndex)
+{
+	if (m_Controllers.size() == m_MaxControllers)
+	{
+		return;
+	}
+	auto controller = std::make_unique<XBoxOneController>(controllerIndex);
+	m_Controllers.push_back(std::move(controller));
+}
+
+void dae::InputManager::AddCommand(int controllerIdx, ButtonState state, ControllerButton button, std::unique_ptr<Command> command) const
+{
+	m_Controllers[controllerIdx]->AddCommand(state, button, std::move(command));
+}
