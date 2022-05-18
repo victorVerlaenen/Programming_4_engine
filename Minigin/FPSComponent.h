@@ -1,9 +1,9 @@
 #pragma once
 #include "Component.h"
-#include "TextComponent.h"
 
 namespace dae
 {
+	class TextComponent;
 	class FPSComponent : public Component
 	{
 	public:

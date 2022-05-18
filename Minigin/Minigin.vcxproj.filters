@@ -40,6 +40,42 @@
     <Filter Include="Input">
       <UniqueIdentifier>{cbce368f-ce63-4051-b09c-8cb7f1789870}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands\Move">
+      <UniqueIdentifier>{80e12c2c-3fcb-450c-a4bc-d73ddddcb11b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component Files\PlayerControllerComponent">
+      <UniqueIdentifier>{22528094-9cb4-4149-9041-3e97c67097c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Jump">
+      <UniqueIdentifier>{8f79ef75-e8ab-49e4-8a34-792926634762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Die">
+      <UniqueIdentifier>{b78ff8dd-932b-4903-8fea-3739813191a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer Files">
+      <UniqueIdentifier>{b33e70af-773b-4bf6-ad2b-9ef5f05721d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer Files\Subject">
+      <UniqueIdentifier>{e443e11f-fc70-481d-a7d5-61ddec64eb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer Files\Observer">
+      <UniqueIdentifier>{ad2005db-3af6-4341-8617-77697e3824ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component Files\MrPepperComponent">
+      <UniqueIdentifier>{d16a0285-7b5c-4d8d-9993-f53339846f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component Files\LivesComponent">
+      <UniqueIdentifier>{1668d01f-251f-4ce8-9550-09c4e2f84e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component Files\ScoreComponent">
+      <UniqueIdentifier>{f174992b-428e-45bc-bb2c-f5282a7ca6a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\GetPoints">
+      <UniqueIdentifier>{c359a55f-5b5a-42a5-a7a3-1e7724fb7ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SteamAchievement">
+      <UniqueIdentifier>{a024e776-6d05-4ad6-a746-afc5ba1c1f47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -129,20 +165,44 @@
     <ClInclude Include="Command.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="DuckCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="FartCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="FireCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="XBoxOneController.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Commands\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllerComponent.h">
+      <Filter>Component Files\PlayerControllerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpCommand.h">
+      <Filter>Commands\Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="DieCommand.h">
+      <Filter>Commands\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Observer Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Observer Files\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="MrPepperComponent.h">
+      <Filter>Component Files\MrPepperComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>Component Files\LivesComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Component Files\ScoreComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsCommand.h">
+      <Filter>Commands\GetPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsAndAchievements.h">
+      <Filter>SteamAchievement</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievements.h">
+      <Filter>SteamAchievement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,20 +290,38 @@
     <ClCompile Include="Command.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="DuckCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="FartCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="FireCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
     <ClCompile Include="XBoxOneController.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Commands\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControllerComponent.cpp">
+      <Filter>Component Files\PlayerControllerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpCommand.cpp">
+      <Filter>Commands\Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="DieCommand.cpp">
+      <Filter>Commands\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Observer Files\Subject</Filter>
+    </ClCompile>
+    <ClCompile Include="MrPepperComponent.cpp">
+      <Filter>Component Files\MrPepperComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>Component Files\LivesComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Component Files\ScoreComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsCommand.cpp">
+      <Filter>Commands\GetPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="StatsAndAchievements.cpp">
+      <Filter>SteamAchievement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

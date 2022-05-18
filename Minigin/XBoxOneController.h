@@ -11,7 +11,8 @@ namespace dae
 	{
 		Down = 0,
 		Up = 1,
-		Pressed = 2
+		Pressed = 2,
+		Stick = 3
 	};
 	enum class ControllerButton
 	{

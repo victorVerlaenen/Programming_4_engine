@@ -21,6 +21,7 @@ namespace dae
 		void AddController(unsigned controllerIndex);
 
 		void AddCommand(int controllerIdx, ButtonState state, ControllerButton button, std::unique_ptr<Command> command) const;
+		int GetNextControllerIndex() const;
 	private:
 		std::vector<std::unique_ptr<XBoxOneController>> m_Controllers{};
 		const int m_MaxControllers{ 4 };

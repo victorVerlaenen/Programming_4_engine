@@ -22,6 +22,7 @@ namespace dae
 
 		glm::vec2 GetPosition() const;
 		void SetPosition(const glm::vec2& position);
+		void Translate(const glm::vec2& translation);
 	private:
 		glm::vec2 m_Position;
 	};

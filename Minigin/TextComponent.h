@@ -11,7 +11,7 @@ namespace dae
 	class TextComponent : public Component
 	{
 	public:
-		TextComponent(GameObject* pOwner, std::shared_ptr<Font> pFont, const SDL_Color& color, const std::string& text = {});
+		TextComponent(GameObject* pOwner, std::shared_ptr<Font> pFont, const SDL_Color& color, const std::string& text = "Empty");
 		virtual ~TextComponent() override = default;
 
 		void Update() override;

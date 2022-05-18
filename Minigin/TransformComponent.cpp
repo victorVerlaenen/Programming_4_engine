@@ -33,3 +33,8 @@ void dae::TransformComponent::SetPosition(const glm::vec2& position)
 {
 	m_Position = position;
 }
+
+void dae::TransformComponent::Translate(const glm::vec2& translation)
+{
+	m_Position += translation;
+}

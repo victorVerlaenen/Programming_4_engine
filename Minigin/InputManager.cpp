@@ -47,3 +47,8 @@ void dae::InputManager::AddCommand(int controllerIdx, ButtonState state, Control
 {
 	m_Controllers[controllerIdx]->AddCommand(state, button, std::move(command));
 }
+
+int dae::InputManager::GetNextControllerIndex() const
+{
+	return static_cast<int>(m_Controllers.size());
+}

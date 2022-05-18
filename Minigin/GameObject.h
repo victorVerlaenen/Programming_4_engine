@@ -13,12 +13,13 @@ namespace dae
 		void Render() const;
 		
 		template <typename T>
-		void AddComponent(T* pComponent)
+		T* AddComponent(T* pComponent)
 		{
 			for (auto pComp : m_pComponents)
 				if (dynamic_cast<T*>(pComp))
-					return;
+					return nullptr;
 			m_pComponents.push_back(pComponent);
+			return pComponent;
 		}
 		template <typename T>
 		T* GetComponent() const

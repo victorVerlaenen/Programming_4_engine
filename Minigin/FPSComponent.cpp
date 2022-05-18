@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "FPSComponent.h"
+#include "TextComponent.h"
 
 dae::FPSComponent::FPSComponent(GameObject* pOwner)
 	:Component{ pOwner }
