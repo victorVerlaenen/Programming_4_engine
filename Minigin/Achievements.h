@@ -21,4 +21,4 @@ Achievement_t g_Achievements[] =
 };
 
 // Global access to Achievements object
-CSteamAchievements* g_SteamAchievements = NULL;
+CSteamAchievements* g_SteamAchievements = nullptr;
