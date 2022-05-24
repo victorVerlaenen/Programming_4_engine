@@ -11,11 +11,7 @@ dae::ScoreComponent::ScoreComponent(GameObject* pOwner)
 
 void dae::ScoreComponent::Update()
 {
-	if (g_SteamAchievements)
-	{
-		if (m_Score >= 500)
-			g_SteamAchievements->SetAchievement("ACH_WIN_ONE_GAME");
-	}
+	
 }
 
 void dae::ScoreComponent::FixedUpdate()

@@ -3,7 +3,7 @@
 
 bool dae::InputManager::ProcessInput() const
 {
-	for (int controllerIdx{ 0 }; controllerIdx < m_Controllers.size(); ++controllerIdx)
+	for (size_t controllerIdx{ 0 }; controllerIdx < m_Controllers.size(); ++controllerIdx)
 	{
 		m_Controllers[controllerIdx]->ProcessInput();
 	}
@@ -27,7 +27,7 @@ bool dae::InputManager::ProcessInput() const
 
 void dae::InputManager::HandleInput() const
 {
-	for (int controllerIdx{ 0 }; controllerIdx < m_Controllers.size(); ++controllerIdx)
+	for (size_t controllerIdx{ 0 }; controllerIdx < m_Controllers.size(); ++controllerIdx)
 	{
 		m_Controllers[controllerIdx]->HandleInput();
 	}

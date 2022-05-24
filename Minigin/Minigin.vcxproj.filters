@@ -73,9 +73,6 @@
     <Filter Include="Commands\GetPoints">
       <UniqueIdentifier>{c359a55f-5b5a-42a5-a7a3-1e7724fb7ca0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SteamAchievement">
-      <UniqueIdentifier>{a024e776-6d05-4ad6-a746-afc5ba1c1f47}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -198,12 +195,6 @@
     <ClInclude Include="PointsCommand.h">
       <Filter>Commands\GetPoints</Filter>
     </ClInclude>
-    <ClInclude Include="StatsAndAchievements.h">
-      <Filter>SteamAchievement</Filter>
-    </ClInclude>
-    <ClInclude Include="Achievements.h">
-      <Filter>SteamAchievement</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -319,9 +310,6 @@
     </ClCompile>
     <ClCompile Include="PointsCommand.cpp">
       <Filter>Commands\GetPoints</Filter>
-    </ClCompile>
-    <ClCompile Include="StatsAndAchievements.cpp">
-      <Filter>SteamAchievement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

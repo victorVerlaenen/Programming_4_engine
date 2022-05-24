@@ -24,7 +24,7 @@ namespace dae
 		int GetNextControllerIndex() const;
 	private:
 		std::vector<std::unique_ptr<XBoxOneController>> m_Controllers{};
-		const int m_MaxControllers{ 4 };
+		const size_t m_MaxControllers{ 4 };
 	};
 
 }
