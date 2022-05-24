@@ -24,7 +24,6 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Minigin</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>MyEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -202,6 +201,7 @@ xcopy $(SolutionDir)/3rdParty\steamworks\redistributable_bin\win64\steam_appid.t
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Achievements.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DieCommand.h" />
@@ -235,6 +235,7 @@ xcopy $(SolutionDir)/3rdParty\steamworks\redistributable_bin\win64\steam_appid.t
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="StatsAndAchievements.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
@@ -353,6 +354,10 @@ xcopy $(SolutionDir)/3rdParty\steamworks\redistributable_bin\win64\steam_appid.t
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="StatsAndAchievements.cpp">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
+    </ClCompile>
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
