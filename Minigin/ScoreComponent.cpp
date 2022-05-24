@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "ScoreComponent.h"
 #include "TextComponent.h"
-#include "Achievements.h"
 
 dae::ScoreComponent::ScoreComponent(GameObject* pOwner)
 	:Component(pOwner)
