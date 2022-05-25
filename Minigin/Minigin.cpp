@@ -18,7 +18,6 @@
 #include "MrPepperComponent.h"
 #include "LivesComponent.h"
 #include "ScoreComponent.h"
-#include <steam_api.h>
 
 using namespace std;
 
@@ -198,8 +197,6 @@ void dae::Minigin::Run()
 			}
 			sceneManager.Update();
 			renderer.Render();
-
-			SteamAPI_RunCallbacks();
 
 			lastTime = currentTime;
 		}
