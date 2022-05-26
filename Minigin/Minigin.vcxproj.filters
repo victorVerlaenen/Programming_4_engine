@@ -203,9 +203,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Minigin Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Minigin Files</Filter>
-    </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Minigin Files</Filter>
     </ClCompile>
