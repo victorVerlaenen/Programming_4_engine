@@ -4,7 +4,7 @@
 
 namespace dae
 {
-	class TextComponent;
+	class RenderComponent;
 	class LivesComponent : public Component, public Observer
 	{
 	public:
@@ -22,7 +22,7 @@ namespace dae
 		LivesComponent& operator=(const LivesComponent& other) = delete;
 		LivesComponent& operator=(LivesComponent&& other) = delete;
 	private:
-		int m_Lives = 3;
-		TextComponent* m_pTextComponent;
+		int m_Lives = 5;
+		RenderComponent* m_pRenderComponent;
 	};
 }

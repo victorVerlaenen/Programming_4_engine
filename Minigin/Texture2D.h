@@ -9,6 +9,8 @@ namespace dae
 	{
 	public:
 		SDL_Texture* GetSDLTexture() const;
+		int GetWidth() const;
+		int GetHeight() const;
 		explicit Texture2D(SDL_Texture* texture);
 		~Texture2D();
 
@@ -18,5 +20,7 @@ namespace dae
 		Texture2D & operator= (const Texture2D &&) = delete;
 	private:
 		SDL_Texture* m_Texture;
+		int m_Width;
+		int m_Height;
 	};
 }

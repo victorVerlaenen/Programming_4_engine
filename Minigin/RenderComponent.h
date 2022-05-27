@@ -9,7 +9,19 @@ namespace dae
 	class RenderComponent : public Component
 	{
 	public:
-		RenderComponent(GameObject* pOwner, const std::string& filename = {});
+		enum class RenderMode
+		{
+			LeftTop,
+			CenterTop,
+			RightTop,
+			LeftCenter,
+			CenterCenter,
+			RightCenter,
+			LeftBottom,
+			CenterBottom,
+			RightBottom
+		};
+		RenderComponent(GameObject* pOwner, RenderMode renderMode = RenderMode::LeftTop, const std::string& filename = {});
 		~RenderComponent() override = default;
 
 		void Update() override;
@@ -25,5 +37,6 @@ namespace dae
 	private:
 		std::shared_ptr<Texture2D> m_pTexture;
 		TransformComponent* m_pTransformComponent;
+		RenderMode m_RenderMode;
 	};
 }

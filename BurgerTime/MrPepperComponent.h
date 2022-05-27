@@ -4,6 +4,7 @@
 
 namespace dae
 {
+	class PlayerControllerComponent;
 	class MrPepperComponent : public Component, public Subject
 	{
 	public:
@@ -18,6 +19,8 @@ namespace dae
 		MrPepperComponent(MrPepperComponent&& other) = delete;
 		MrPepperComponent& operator=(const MrPepperComponent& other) = delete;
 		MrPepperComponent& operator=(MrPepperComponent&& other) = delete;
+	private:
+		PlayerControllerComponent* m_pPlayerControllerComponent;
 	};
 }
 
