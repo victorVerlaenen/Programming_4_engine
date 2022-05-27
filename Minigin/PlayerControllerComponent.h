@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "XBoxOneController.h"
 
 namespace dae
 {
@@ -17,6 +18,8 @@ namespace dae
 		PlayerControllerComponent(PlayerControllerComponent&& other) = delete;
 		PlayerControllerComponent& operator=(const PlayerControllerComponent& other) = delete;
 		PlayerControllerComponent& operator=(PlayerControllerComponent&& other) = delete;
+
+		void AddCommand(ButtonState state, ControllerButton button, std::unique_ptr<Command> command);
 	private:
 		int m_ControllerIndex;
 	};

@@ -46,7 +46,7 @@ void dae::ImGuiComponent::Exercise1()
 {
 	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(250, 250), ImGuiCond_FirstUseEver);
-
+	
 	if (!ImGui::Begin("Exercise 1"))
 	{
 		// Early out if the window is collapsed, as an optimization.
@@ -111,7 +111,7 @@ void dae::ImGuiComponent::Exercise2()
 {
 	ImGui::SetNextWindowPos(ImVec2(270, 20), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(250, 250), ImGuiCond_FirstUseEver);
-
+	
 	if (!ImGui::Begin("Exercise 2"))
 	{
 		// Early out if the window is collapsed, as an optimization.

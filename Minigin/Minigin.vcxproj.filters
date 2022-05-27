@@ -25,9 +25,6 @@
     <Filter Include="Component Files\FPSComponent">
       <UniqueIdentifier>{590edf47-9237-4baf-b1e4-f7302b06d114}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Minigin Files\Time">
-      <UniqueIdentifier>{af87e328-cfa5-4394-978f-4282acbe7def}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Imgui">
       <UniqueIdentifier>{36324eb9-3596-42a8-8480-59f6c7797d87}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="Commands\GetPoints">
       <UniqueIdentifier>{c359a55f-5b5a-42a5-a7a3-1e7724fb7ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Minigin Files\Clock">
+      <UniqueIdentifier>{af87e328-cfa5-4394-978f-4282acbe7def}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,8 +123,8 @@
     <ClInclude Include="FPSComponent.h">
       <Filter>Component Files\FPSComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Minigin Files\Time</Filter>
+    <ClInclude Include="Clock.h">
+      <Filter>Minigin Files\Clock</Filter>
     </ClInclude>
     <ClInclude Include="Imgui\imconfig.h">
       <Filter>Imgui</Filter>
@@ -165,17 +165,8 @@
     <ClInclude Include="XBoxOneController.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="MoveCommand.h">
-      <Filter>Commands\Move</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerControllerComponent.h">
       <Filter>Component Files\PlayerControllerComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpCommand.h">
-      <Filter>Commands\Jump</Filter>
-    </ClInclude>
-    <ClInclude Include="DieCommand.h">
-      <Filter>Commands\Die</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Observer Files\Observer</Filter>
@@ -183,17 +174,8 @@
     <ClInclude Include="Subject.h">
       <Filter>Observer Files\Subject</Filter>
     </ClInclude>
-    <ClInclude Include="MrPepperComponent.h">
-      <Filter>Component Files\MrPepperComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesComponent.h">
-      <Filter>Component Files\LivesComponent</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Component Files\ScoreComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsCommand.h">
-      <Filter>Commands\GetPoints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,8 +224,8 @@
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Component Files\FPSComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Minigin Files\Time</Filter>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Minigin Files\Clock</Filter>
     </ClCompile>
     <ClCompile Include="Imgui\imgui.cpp">
       <Filter>Imgui</Filter>
@@ -281,32 +263,14 @@
     <ClCompile Include="XBoxOneController.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="MoveCommand.cpp">
-      <Filter>Commands\Move</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerControllerComponent.cpp">
       <Filter>Component Files\PlayerControllerComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpCommand.cpp">
-      <Filter>Commands\Jump</Filter>
-    </ClCompile>
-    <ClCompile Include="DieCommand.cpp">
-      <Filter>Commands\Die</Filter>
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>Observer Files\Subject</Filter>
     </ClCompile>
-    <ClCompile Include="MrPepperComponent.cpp">
-      <Filter>Component Files\MrPepperComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesComponent.cpp">
-      <Filter>Component Files\LivesComponent</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Component Files\ScoreComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsCommand.cpp">
-      <Filter>Commands\GetPoints</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

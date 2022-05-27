@@ -11,7 +11,7 @@ dae::FPSComponent::FPSComponent(GameObject* pOwner)
 
 void dae::FPSComponent::Update()
 {
-	m_FramesPerSecond = static_cast<int>(1 / Time::GetInstance().GetDeltaTime());
+	m_FramesPerSecond = static_cast<int>(1 / Clock::GetInstance().GetDeltaTime());
 	m_pTextComponent->SetText("FPS: " + std::to_string(m_FramesPerSecond));
 }
 

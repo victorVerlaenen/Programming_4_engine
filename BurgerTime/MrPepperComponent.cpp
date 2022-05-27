@@ -1,4 +1,4 @@
-#include "MiniginPCH.h"
+#include "BurgerTimePCH.h"
 #include "MrPepperComponent.h"
 
 dae::MrPepperComponent::MrPepperComponent(GameObject* pOwner)

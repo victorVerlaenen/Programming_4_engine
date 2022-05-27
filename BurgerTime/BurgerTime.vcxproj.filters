@@ -1,20 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Commands\DieCommand">
+      <UniqueIdentifier>{ba3d893f-e419-4074-80fb-e2c7002b16ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\JumpCommand">
+      <UniqueIdentifier>{d46cd8ef-2750-44c4-9370-30a17a35fa18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\MoveCommand">
+      <UniqueIdentifier>{eb535475-feeb-48d3-9e91-addf1e873955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\PointsCommand">
+      <UniqueIdentifier>{bd8ecdb9-1b04-43b7-bc14-c22d2eab4014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\LivesComponent">
+      <UniqueIdentifier>{75306034-cfcc-47ae-b32f-31620fd1ef89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\MrPepperComponent">
+      <UniqueIdentifier>{34fc81ad-c06d-487d-baae-84ea64c1a72a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BurgerTime">
+      <UniqueIdentifier>{6400a6fd-572f-4253-ac7e-7708a1e41dd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{b8ec22c5-64f2-43dc-a12e-ea1f50c19023}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BurgerTime.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="DieCommand.cpp">
+      <Filter>Commands\DieCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpCommand.cpp">
+      <Filter>Commands\JumpCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Commands\MoveCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsCommand.cpp">
+      <Filter>Commands\PointsCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>Components\LivesComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="MrPepperComponent.cpp">
+      <Filter>Components\MrPepperComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="BurgerTime.cpp">
+      <Filter>BurgerTime</Filter>
+    </ClCompile>
+    <ClCompile Include="BurgerTimePCH.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DieCommand.h">
+      <Filter>Commands\DieCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpCommand.h">
+      <Filter>Commands\JumpCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Commands\MoveCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsCommand.h">
+      <Filter>Commands\PointsCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>Components\LivesComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="MrPepperComponent.h">
+      <Filter>Components\MrPepperComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="BurgerTime.h">
+      <Filter>BurgerTime</Filter>
+    </ClInclude>
+    <ClInclude Include="BurgerTimePCH.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
