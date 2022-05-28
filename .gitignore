@@ -365,4 +365,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Include the 3rd party folder
-!Minigin/3rdParty/*
+!3rdParty/*
