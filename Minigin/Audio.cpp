@@ -51,7 +51,7 @@ void dae::Audio::AudioImpl::Load()
 	m_pMixChunk = Mix_LoadWAV(m_FilePath.c_str());
 }
 
-void dae::Audio::SetVolume(float volume)
+void dae::Audio::SetVolume(int volume)
 {
 	pImlp->SetVolume(volume);
 }

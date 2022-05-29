@@ -16,8 +16,7 @@ int main(int, char* [])
 	dae::BurgerTime game;
 
 
-	engine.Run(std::bind(&dae::BurgerTime::LoadBurgerTime, &game));
-	//engine.Run();
+	engine.Run([ObjectPtr = &game] { ObjectPtr->LoadBurgerTime(); });
 
 	return 0;
 }

@@ -7,7 +7,6 @@ namespace dae
 	{
 	public:
 		void Initialize();
-		void LoadGame() const;
 		void Cleanup();
 
 		void Run(std::function<void()> loadFunction);

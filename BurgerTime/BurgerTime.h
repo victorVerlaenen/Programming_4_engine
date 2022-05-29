@@ -6,15 +6,15 @@ namespace dae
 	class BurgerTime
 	{
 	public:
-		BurgerTime() = default;
-		~BurgerTime() = default;
+		BurgerTime();
+		~BurgerTime();
 
 		BurgerTime(const BurgerTime& other) = delete;
 		BurgerTime(BurgerTime&& other) = delete;
 		BurgerTime& operator=(const BurgerTime& other) = delete;
 		BurgerTime& operator=(BurgerTime&& other) = delete;
 
-		void LoadBurgerTime();
+		void LoadBurgerTime() const;
 	private:
 		void AddDAELogo(Scene& scene) const;
 		void AddText(Scene& scene, const std::string& text, const glm::vec2& pos, const SDL_Color& textColor, unsigned int fontSize) const;

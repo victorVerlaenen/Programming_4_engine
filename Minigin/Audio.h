@@ -17,7 +17,7 @@ namespace dae
 		void Play() const;
 		void Load() const;
 
-		void SetVolume(float volume);
+		void SetVolume(int volume);
 		int GetVolume() const;
 		bool IsLoaded() const;
 	private:

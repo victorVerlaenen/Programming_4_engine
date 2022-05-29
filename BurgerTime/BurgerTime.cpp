@@ -6,21 +6,31 @@
 #include "Scene.h"
 #include "InputManager.h"
 
-#include "Component.h"
 #include "RenderComponent.h"
 #include "TransformComponent.h"
 #include "TextComponent.h"
 #include "FPSComponent.h"
-#include "ImGuiComponent.h"
 #include "PlayerControllerComponent.h"
 #include "LivesComponent.h"
+#include "LoggedAudioSystem.h"
 #include "ScoreComponent.h"
 #include "MrPepperComponent.h"
+#include "NullAudioSystem.h"
+#include "ServiceLocator.h"
 
-#include "DieCommand.h"
-#include "PointsCommand.h"
 
-void dae::BurgerTime::LoadBurgerTime()
+dae::BurgerTime::BurgerTime()
+{
+	ServiceLocator::Initialize();
+	ServiceLocator::RegisterAudioSystem(new LoggedAudioSystem{nullptr});
+}
+
+dae::BurgerTime::~BurgerTime()
+{
+	ServiceLocator::CleanUp();
+}
+
+void dae::BurgerTime::LoadBurgerTime() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 

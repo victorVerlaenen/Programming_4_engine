@@ -85,11 +85,14 @@
     <Filter Include="SoundSystem\Audio\AudioSystem">
       <UniqueIdentifier>{ac25056d-bcbd-4c45-86a9-a3a0ec80c628}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SoundSystem\Audio\GameAudioSystem">
-      <UniqueIdentifier>{8dd6f02c-3d94-4289-9d7a-5b8e63f58b0a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SoundSystem\Audio\NullAudioSystem">
       <UniqueIdentifier>{d213b47a-d620-47f0-9037-1e1651403203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundSystem\Audio\StandardAudioSystem">
+      <UniqueIdentifier>{8dd6f02c-3d94-4289-9d7a-5b8e63f58b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundSystem\Audio\LoggedAudioSystem">
+      <UniqueIdentifier>{be4948d0-cbfe-4ef1-a330-bfc85695f8dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -201,14 +204,17 @@
     <ClInclude Include="ServiceLocator.h">
       <Filter>SoundSystem\Locator</Filter>
     </ClInclude>
-    <ClInclude Include="GameAudioSystem.h">
-      <Filter>SoundSystem\Audio\GameAudioSystem</Filter>
+    <ClInclude Include="StandardAudioSystem.h">
+      <Filter>SoundSystem\Audio\StandardAudioSystem</Filter>
     </ClInclude>
     <ClInclude Include="NullAudioSystem.h">
       <Filter>SoundSystem\Audio\NullAudioSystem</Filter>
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
       <Filter>SoundSystem\Audio\AudioSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggedAudioSystem.h">
+      <Filter>SoundSystem\Audio\LoggedAudioSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,14 +317,14 @@
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>SoundSystem\Locator</Filter>
     </ClCompile>
-    <ClCompile Include="GameAudioSystem.cpp">
-      <Filter>SoundSystem\Audio\GameAudioSystem</Filter>
+    <ClCompile Include="StandardAudioSystem.cpp">
+      <Filter>SoundSystem\Audio\StandardAudioSystem</Filter>
     </ClCompile>
     <ClCompile Include="NullAudioSystem.cpp">
       <Filter>SoundSystem\Audio\NullAudioSystem</Filter>
     </ClCompile>
-    <ClCompile Include="AudioSystem.cpp">
-      <Filter>SoundSystem\Audio\AudioSystem</Filter>
+    <ClCompile Include="LoggedAudioSystem.cpp">
+      <Filter>SoundSystem\Audio\LoggedAudioSystem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

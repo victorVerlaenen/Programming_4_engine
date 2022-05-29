@@ -1,0 +1,21 @@
+#pragma once
+#include "AudioSystem.h"
+
+namespace dae
+{
+	class StandardAudioSystem final : public AudioSystem
+	{
+	public:
+		StandardAudioSystem();
+		~StandardAudioSystem() override;
+
+		StandardAudioSystem(const StandardAudioSystem& other) = delete;
+		StandardAudioSystem(StandardAudioSystem&& other) noexcept = delete;
+		StandardAudioSystem& operator=(const StandardAudioSystem& other) = delete;
+		StandardAudioSystem& operator=(StandardAudioSystem&& other) noexcept = delete;
+
+		void RegisterSound(const std::string& filePath) override;
+		void CheckQueue() override;
+	};
+}
+
