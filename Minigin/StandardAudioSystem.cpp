@@ -24,7 +24,7 @@ dae::StandardAudioSystem::~StandardAudioSystem()
 
 void dae::StandardAudioSystem::RegisterSound(const std::string& filePath)
 {
-	m_Sounds.emplace(new Audio(filePath));
+	m_Sounds.emplace(new Audio("../Data/" + filePath));
 }
 
 void dae::StandardAudioSystem::CheckQueue()

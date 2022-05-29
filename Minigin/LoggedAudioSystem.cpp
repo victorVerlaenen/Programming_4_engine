@@ -1,8 +1,7 @@
 #include "MiniginPCH.h"
 #include "LoggedAudioSystem.h"
-#include "NullAudioSystem.h"
 
-dae::LoggedAudioSystem::LoggedAudioSystem(AudioSystem* wrappedAudioSystem = new NullAudioSystem{})
+dae::LoggedAudioSystem::LoggedAudioSystem(AudioSystem* wrappedAudioSystem)
 	: m_WrappedAudioSystem(wrappedAudioSystem)
 {
 	Log("AudioSystem created");

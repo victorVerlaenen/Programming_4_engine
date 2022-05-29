@@ -17,12 +17,14 @@
 #include "MrPepperComponent.h"
 #include "NullAudioSystem.h"
 #include "ServiceLocator.h"
+#include "StandardAudioSystem.h"
 
 
 dae::BurgerTime::BurgerTime()
 {
 	ServiceLocator::Initialize();
-	ServiceLocator::RegisterAudioSystem(new LoggedAudioSystem{nullptr});
+	ServiceLocator::RegisterAudioSystem(new StandardAudioSystem{});
+	//ServiceLocator::RegisterAudioSystem(new LoggedAudioSystem{});
 }
 
 dae::BurgerTime::~BurgerTime()
