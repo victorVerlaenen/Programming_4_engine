@@ -210,6 +210,7 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="LoggedAudioSystem.h" />
+    <ClInclude Include="SpriteRenderComponent.h" />
     <ClInclude Include="StandardAudioSystem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiComponent.h" />
@@ -236,6 +237,7 @@
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
@@ -251,6 +253,7 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
+    <ClCompile Include="SpriteRenderComponent.cpp" />
     <ClCompile Include="StandardAudioSystem.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ImGuiComponent.cpp" />

@@ -17,6 +17,7 @@
 #include "MrPepperComponent.h"
 #include "NullAudioSystem.h"
 #include "ServiceLocator.h"
+#include "SpriteRenderComponent.h"
 #include "StandardAudioSystem.h"
 
 
@@ -36,13 +37,11 @@ void dae::BurgerTime::LoadBurgerTime() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	//AddDAELogo(scene);
-	//AddText(scene, "Programming 4 Assignment", glm::vec2{ 80,20 }, SDL_Color{ 255, 255, 255 }, 36);
-
 	AddFPSCounter(scene, glm::vec2{ 10,10 }, SDL_Color{ 255, 255, 0 });
 
 	AddPlayerOne(scene);
 	//AddPlayerTwo(scene);
+
 
 	//ImGuiObject
 	/*const auto imGuiObject = std::make_shared<GameObject>();
@@ -54,7 +53,7 @@ void dae::BurgerTime::AddDAELogo(Scene& scene) const
 {
 	const auto textureObject = std::make_shared<GameObject>();
 	textureObject->AddComponent(new TransformComponent{ textureObject.get(), glm::vec2{216,180} });
-	textureObject->AddComponent(new RenderComponent{ textureObject.get(), RenderComponent::RenderMode::LeftTop, "logo.png" });
+	textureObject->AddComponent(new RenderComponent{ textureObject.get(), 1, RenderMode::LeftTop, "logo.png" });
 	scene.Add(textureObject);
 }
 
@@ -86,20 +85,23 @@ void dae::BurgerTime::AddPlayerOne(Scene& scene) const
 	//LivesDisplayObject
 	const auto livesObject = std::make_shared<GameObject>();
 	livesObject->AddComponent(new TransformComponent{ livesObject.get(), glm::vec2{10, m_WindowHeight - 10} });
-	livesObject->AddComponent(new RenderComponent{ livesObject.get(), RenderComponent::RenderMode::LeftBottom });
+	livesObject->AddComponent(new RenderComponent{ livesObject.get(), 3, RenderMode::LeftBottom });
 	auto pLivesComponent = livesObject->AddComponent(new LivesComponent{ livesObject.get() });
 	scene.Add(livesObject);
 
 	//ScoreDisplayObject
 	const auto scoreObject = std::make_shared<GameObject>();
 	scoreObject->AddComponent(new TransformComponent{ scoreObject.get(), glm::vec2{m_WindowWidth/2 - 20, 10} });
-	scoreObject->AddComponent(new RenderComponent{ scoreObject.get(), RenderComponent::RenderMode::LeftTop });
+	scoreObject->AddComponent(new RenderComponent{ scoreObject.get(), 1, RenderMode::LeftTop });
 	scoreObject->AddComponent(new TextComponent{ scoreObject.get(), font, SDL_Color{0, 255, 0} });
 	auto pScoreComponent = scoreObject->AddComponent(new ScoreComponent{ scoreObject.get() });
 	scene.Add(scoreObject);
 
 	//PlayerOneObject
 	const auto playerObject = std::make_shared<GameObject>();
+	playerObject->AddComponent(new TransformComponent{ playerObject.get(), glm::vec2{m_WindowWidth / 2, m_WindowHeight / 2} });
+	//playerObject->AddComponent(new RenderComponent{ playerObject.get(), 3, RenderMode::CenterBottom, "Idle.png" });
+	playerObject->AddComponent(new SpriteRenderComponent{ playerObject.get(), "Running.png", 1, 4, 3, RenderMode::CenterBottom });
 	playerObject->AddComponent(new PlayerControllerComponent{ playerObject.get() });
 	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get() });
 	pMrPepperComponent->AddObserver(pLivesComponent);

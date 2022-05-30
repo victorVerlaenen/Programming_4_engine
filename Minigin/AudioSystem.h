@@ -11,7 +11,7 @@ namespace dae
 	public:
 		AudioSystem() = default;
 		virtual ~AudioSystem() = default;
-		virtual void RegisterSound(const std::string& filePath) = 0;
+		virtual void PlaySound(const std::string& filePath) = 0;
 		virtual void CheckQueue() = 0;
 	protected:
 		std::vector<Audio*> m_PlayedSounds{};

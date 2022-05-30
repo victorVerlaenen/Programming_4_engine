@@ -15,7 +15,7 @@ namespace dae
 		LoggedAudioSystem& operator=(const LoggedAudioSystem& other) = delete;
 		LoggedAudioSystem& operator=(LoggedAudioSystem&& other) noexcept = delete;
 
-		void RegisterSound(const std::string& filePath) override;
+		void PlaySound(const std::string& filePath) override;
 		void CheckQueue() override;
 	private:
 		void Log(const std::string& message) const;

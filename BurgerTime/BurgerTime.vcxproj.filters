@@ -37,6 +37,18 @@
     <Filter Include="PCH">
       <UniqueIdentifier>{b8ec22c5-64f2-43dc-a12e-ea1f50c19023}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{43c47747-4023-4105-bdf6-6d85551b30ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\IdleState">
+      <UniqueIdentifier>{7b7cbbf9-e172-4e8f-a12a-c3bd62c85424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\MoveState">
+      <UniqueIdentifier>{7961a667-277d-4db5-9e1e-f93e43c154f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\StopCommand">
+      <UniqueIdentifier>{d3bbc9f5-ef65-43e9-aa42-7675c93e1f20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -64,6 +76,15 @@
     <ClCompile Include="BurgerTimePCH.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>States\IdleState</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>States\MoveState</Filter>
+    </ClCompile>
+    <ClCompile Include="StopCommand.cpp">
+      <Filter>Commands\StopCommand</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DieCommand.h">
@@ -89,6 +110,15 @@
     </ClInclude>
     <ClInclude Include="BurgerTimePCH.h">
       <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>States\IdleState</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>States\MoveState</Filter>
+    </ClInclude>
+    <ClInclude Include="StopCommand.h">
+      <Filter>Commands\StopCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

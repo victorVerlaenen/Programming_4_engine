@@ -5,25 +5,46 @@
 #include "ResourceManager.h"
 #include "TransformComponent.h"
 
-dae::RenderComponent::RenderComponent(GameObject* pOwner, RenderMode renderMode, const std::string& filename)
-	:Component{pOwner}
-	,m_pTransformComponent{ GetOwner()->GetComponent<TransformComponent>() }
-	, m_RenderMode{renderMode}
+dae::RenderComponent::RenderComponent(GameObject* pOwner)
+	:RenderComponent(pOwner, RenderMode::LeftTop, {})
 {
-	if(!filename.empty())
+}
+
+dae::RenderComponent::RenderComponent(GameObject* pOwner, RenderMode renderMode, const std::string& filename)
+	: RenderComponent(pOwner, 1, renderMode, filename)
+{
+}
+
+dae::RenderComponent::RenderComponent(GameObject* pOwner, const int scale, RenderMode renderMode, const std::string& filename)
+	: Component{ pOwner }
+	, m_pTransformComponent{ GetOwner()->GetComponent<TransformComponent>() }
+	, m_RenderMode{ renderMode }
+	, m_Scale(scale)
+	, m_pTexture(nullptr)
+	, m_IsScaled(true)
+	, m_Width(0)
+	, m_Height(0)
+{
+	if (!filename.empty())
 	{
 		m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 	}
 }
 
-void dae::RenderComponent::Update()
+dae::RenderComponent::RenderComponent(GameObject* pOwner, int width, int height, RenderMode renderMode, const std::string& filename)
+	:Component(pOwner)
+	, m_pTransformComponent{ GetOwner()->GetComponent<TransformComponent>() }
+	, m_RenderMode{ renderMode }
+	, m_Scale(0)
+	, m_pTexture(nullptr)
+	, m_IsScaled(false)
+	, m_Width(width)
+	, m_Height(height)
 {
-	
-}
-
-void dae::RenderComponent::FixedUpdate()
-{
-
+	if (!filename.empty())
+	{
+		m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	}
 }
 
 void dae::RenderComponent::Render() const
@@ -31,38 +52,13 @@ void dae::RenderComponent::Render() const
 	if (m_pTexture != nullptr)
 	{
 		const glm::vec2& pos = m_pTransformComponent->GetPosition();
-		switch (m_RenderMode)
+		if(m_IsScaled)
 		{
-		case dae::RenderComponent::RenderMode::LeftTop:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
-			break;
-		case dae::RenderComponent::RenderMode::CenterTop:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - m_pTexture->GetWidth()/2, pos.y);
-			break;
-		case dae::RenderComponent::RenderMode::RightTop:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - m_pTexture->GetWidth(), pos.y);
-			break;
-		case dae::RenderComponent::RenderMode::LeftCenter:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y - m_pTexture->GetHeight()/2);
-			break;
-		case dae::RenderComponent::RenderMode::CenterCenter:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - m_pTexture->GetWidth()/2, pos.y - m_pTexture->GetHeight() / 2);
-			break;
-		case dae::RenderComponent::RenderMode::RightCenter:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - m_pTexture->GetWidth(), pos.y - m_pTexture->GetHeight() / 2);
-			break;
-		case dae::RenderComponent::RenderMode::LeftBottom:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y - m_pTexture->GetHeight());
-			break;
-		case dae::RenderComponent::RenderMode::CenterBottom:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - m_pTexture->GetWidth()/2, pos.y - m_pTexture->GetHeight());
-			break;
-		case dae::RenderComponent::RenderMode::RightBottom:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x - m_pTexture->GetWidth(), pos.y - m_pTexture->GetHeight());
-			break;
-		default:
-			dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x , pos.y);
-			break;
+			Renderer::GetInstance().RenderTexture(*m_pTexture, m_RenderMode, pos.x, pos.y, m_Scale);
+		}
+		else
+		{
+			Renderer::GetInstance().RenderTexture(*m_pTexture, m_RenderMode, pos.x, pos.y, static_cast<float>( m_Width), static_cast<float>(m_Height));
 		}
 	}
 }

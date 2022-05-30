@@ -18,10 +18,10 @@ dae::LoggedAudioSystem::~LoggedAudioSystem()
 	m_WrappedAudioSystem = nullptr;
 }
 
-void dae::LoggedAudioSystem::RegisterSound(const std::string& filePath)
+void dae::LoggedAudioSystem::PlaySound(const std::string& filePath)
 {
-	Log("Register sound");
-	m_WrappedAudioSystem->RegisterSound(filePath);
+	Log("Play sound");
+	m_WrappedAudioSystem->PlaySound(filePath);
 }
 
 void dae::LoggedAudioSystem::CheckQueue()

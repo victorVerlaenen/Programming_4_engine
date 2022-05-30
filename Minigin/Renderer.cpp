@@ -50,21 +50,77 @@ void dae::Renderer::Destroy()
 	}
 }
 
-void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+void dae::Renderer::RenderTexture(const Texture2D& texture, RenderMode renderMode, const float x, const float y, const int scale) const
 {
 	SDL_Rect dst{};
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
-	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+	dst.w *= static_cast<int>(scale);
+	dst.h *= static_cast<int>(scale);
+
+	SetDestRect(renderMode, dst);
+	
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+void dae::Renderer::RenderTexture(const Texture2D& texture, RenderMode renderMode, const float x, const float y, const float width, const float height) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
+
+	SetDestRect(renderMode, dst);
+
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+}
+
+void dae::Renderer::RenderTexture(const Texture2D& texture, RenderMode renderMode, SDL_Rect destRect) const
+{
+	SDL_Rect dst = destRect;
+	SetDestRect(renderMode, dst);
+
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+}
+
+void dae::Renderer::RenderTexture(const Texture2D& texture, RenderMode renderMode, SDL_Rect destRect, SDL_Rect srcRect) const
+{
+	SDL_Rect src = srcRect;
+
+	SDL_Rect dst = destRect;
+	SetDestRect(renderMode, dst);
+
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
+}
+
+void dae::Renderer::SetDestRect(RenderMode renderMode, SDL_Rect& destRect) const
+{
+	switch (renderMode)
+	{
+	case RenderMode::CenterCenter:
+		destRect.x = (destRect.x - destRect.w / 2);
+	case RenderMode::LeftCenter:
+		destRect.y = (destRect.y - destRect.h / 2);
+		break;
+	case RenderMode::CenterBottom:
+		destRect.y = (destRect.y - destRect.h);
+	case RenderMode::CenterTop:
+		destRect.x = (destRect.x - destRect.w / 2);
+		break;
+	case RenderMode::RightBottom:
+		destRect.x = (destRect.x - destRect.w);
+	case RenderMode::LeftBottom:
+		destRect.y = (destRect.y - destRect.h);
+		break;
+	case RenderMode::RightCenter:
+		destRect.y = (destRect.y - destRect.h / 2);
+	case RenderMode::RightTop:
+		destRect.x = (destRect.x - destRect.w);
+		break;
+	case RenderMode::LeftTop:
+	default:
+		break;
+	}
 }

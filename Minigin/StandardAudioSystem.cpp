@@ -22,7 +22,7 @@ dae::StandardAudioSystem::~StandardAudioSystem()
 	Mix_CloseAudio();
 }
 
-void dae::StandardAudioSystem::RegisterSound(const std::string& filePath)
+void dae::StandardAudioSystem::PlaySound(const std::string& filePath)
 {
 	m_Sounds.emplace(new Audio("../Data/" + filePath));
 }

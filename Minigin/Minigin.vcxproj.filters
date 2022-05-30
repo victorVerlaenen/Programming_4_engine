@@ -94,6 +94,12 @@
     <Filter Include="SoundSystem\Audio\LoggedAudioSystem">
       <UniqueIdentifier>{be4948d0-cbfe-4ef1-a330-bfc85695f8dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component Files\RenderComponent\SpriteRenderComponent">
+      <UniqueIdentifier>{5baa86ac-2bde-4088-9d01-106b8dc09b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{0559a2f8-7b63-490c-9012-04e5f8987021}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -216,6 +222,12 @@
     <ClInclude Include="LoggedAudioSystem.h">
       <Filter>SoundSystem\Audio\LoggedAudioSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteRenderComponent.h">
+      <Filter>Component Files\RenderComponent\SpriteRenderComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -325,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="LoggedAudioSystem.cpp">
       <Filter>SoundSystem\Audio\LoggedAudioSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderComponent.cpp">
+      <Filter>Component Files\RenderComponent\SpriteRenderComponent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
