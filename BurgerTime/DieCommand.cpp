@@ -9,6 +9,7 @@
 dae::DieCommand::DieCommand(GameObject* actor)
 	:Command(actor)
 {
+
 }
 
 void dae::DieCommand::Execute()

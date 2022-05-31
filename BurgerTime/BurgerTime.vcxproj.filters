@@ -16,9 +16,6 @@
     <Filter Include="Commands\DieCommand">
       <UniqueIdentifier>{ba3d893f-e419-4074-80fb-e2c7002b16ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Commands\JumpCommand">
-      <UniqueIdentifier>{d46cd8ef-2750-44c4-9370-30a17a35fa18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Commands\MoveCommand">
       <UniqueIdentifier>{eb535475-feeb-48d3-9e91-addf1e873955}</UniqueIdentifier>
     </Filter>
@@ -49,14 +46,26 @@
     <Filter Include="Commands\StopCommand">
       <UniqueIdentifier>{d3bbc9f5-ef65-43e9-aa42-7675c93e1f20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Map">
+      <UniqueIdentifier>{4ed59fb1-6fbb-4239-b798-87c0c7caa7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Map\PlatformComponent">
+      <UniqueIdentifier>{893fb3a7-1e15-42df-abf6-657b7dade806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Map\LadderPlatformComponent">
+      <UniqueIdentifier>{7e512f97-805f-4aa1-8c88-86cc438cc4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Map\LadderComponent">
+      <UniqueIdentifier>{90fcc00e-b431-47cf-915d-bf1fe6483ff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\PhysicsBodyComponent">
+      <UniqueIdentifier>{51417d80-4b17-4dbe-894f-060accfeb624}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="DieCommand.cpp">
       <Filter>Commands\DieCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpCommand.cpp">
-      <Filter>Commands\JumpCommand</Filter>
     </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands\MoveCommand</Filter>
@@ -85,13 +94,13 @@
     <ClCompile Include="StopCommand.cpp">
       <Filter>Commands\StopCommand</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsBodyComponent.cpp">
+      <Filter>Components\PhysicsBodyComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DieCommand.h">
       <Filter>Commands\DieCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpCommand.h">
-      <Filter>Commands\JumpCommand</Filter>
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Commands\MoveCommand</Filter>
@@ -119,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="StopCommand.h">
       <Filter>Commands\StopCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsBodyComponent.h">
+      <Filter>Components\PhysicsBodyComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

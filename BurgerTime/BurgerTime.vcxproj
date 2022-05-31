@@ -173,11 +173,11 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="DieCommand.cpp" />
     <ClCompile Include="IdleState.cpp" />
-    <ClCompile Include="JumpCommand.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="MrPepperComponent.cpp" />
+    <ClCompile Include="PhysicsBodyComponent.cpp" />
     <ClCompile Include="PointsCommand.cpp" />
     <ClCompile Include="StopCommand.cpp" />
   </ItemGroup>
@@ -186,11 +186,11 @@
     <ClInclude Include="BurgerTimePCH.h" />
     <ClInclude Include="DieCommand.h" />
     <ClInclude Include="IdleState.h" />
-    <ClInclude Include="JumpCommand.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="MrPepperComponent.h" />
+    <ClInclude Include="PhysicsBodyComponent.h" />
     <ClInclude Include="PointsCommand.h" />
     <ClInclude Include="StopCommand.h" />
   </ItemGroup>

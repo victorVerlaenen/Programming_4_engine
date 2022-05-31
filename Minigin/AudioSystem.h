@@ -14,7 +14,7 @@ namespace dae
 		virtual void PlaySound(const std::string& filePath) = 0;
 		virtual void CheckQueue() = 0;
 	protected:
-		std::vector<Audio*> m_PlayedSounds{};
+		std::vector<Audio*> m_PlayedSounds{};//This is to delete the sounds
 		std::queue<Audio*> m_Sounds{};
 
 		std::mutex m_Mutex;
