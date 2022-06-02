@@ -99,7 +99,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget);$(SolutionDir)Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget)\Debug;$(SolutionDir)Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Minigin.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -120,7 +120,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget);$(SolutionDir)Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget)\Release;$(SolutionDir)Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Minigin.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -137,7 +137,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget);$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget)\Debug;$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Minigin.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -158,7 +158,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget);$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\box2d\lib\$(PlatformTarget)\Release;$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Minigin.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -170,6 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="DieCommand.cpp" />
     <ClCompile Include="IdleState.cpp" />
@@ -178,12 +179,14 @@
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="MrPepperComponent.cpp" />
     <ClCompile Include="PhysicsBodyComponent.cpp" />
+    <ClCompile Include="PlatformComponent.cpp" />
     <ClCompile Include="PointsCommand.cpp" />
     <ClCompile Include="StopCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="BurgerTimePCH.h" />
+    <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="DieCommand.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LivesComponent.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="MrPepperComponent.h" />
     <ClInclude Include="PhysicsBodyComponent.h" />
+    <ClInclude Include="PlatformComponent.h" />
     <ClInclude Include="PointsCommand.h" />
     <ClInclude Include="StopCommand.h" />
   </ItemGroup>

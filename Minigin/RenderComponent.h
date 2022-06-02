@@ -14,12 +14,15 @@ namespace dae
 		RenderComponent(GameObject* pOwner);
 		RenderComponent(GameObject* pOwner, RenderMode renderMode, const std::string& filename = {});
 		RenderComponent(GameObject* pOwner, int scale, RenderMode renderMode = RenderMode::LeftTop, const std::string& filename = {});
-		RenderComponent(GameObject* pOwner, int width, int height, RenderMode renderMode = RenderMode::LeftTop, const std::string& filename = {});
 		~RenderComponent() override = default;
 
-		void Update() override {};
+		virtual void Update() override;
 		void FixedUpdate() override {};
 		void Render() const override;
+		virtual int GetTextureWidth() const { return m_Width * m_Scale; }
+		virtual int GetTextureHeight() const { return m_Height * m_Scale; }
+		glm::vec2 GetPosition() const;
+		RenderMode GetRenderMode() const { return m_RenderMode; }
 
 		RenderComponent(const RenderComponent& other) = delete;
 		RenderComponent(RenderComponent&& other) = delete;
@@ -28,12 +31,13 @@ namespace dae
 
 		void SetTexture(std::shared_ptr<Texture2D> pTexture);
 	protected:
+		void SetPos(RenderMode renderMode, glm::vec2& pos) const;
 		std::shared_ptr<Texture2D> m_pTexture;
 		TransformComponent* m_pTransformComponent;
 		RenderMode m_RenderMode;
+		glm::vec2 m_Position;
 		int m_Scale;
 		int m_Width;
 		int m_Height;
-		bool m_IsScaled;
 	};
 }

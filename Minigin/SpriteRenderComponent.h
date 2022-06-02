@@ -7,13 +7,14 @@ namespace dae
 	{
 	public:
 		SpriteRenderComponent(GameObject* pOwner, const std::string& filename, int nrOfRows, int nrOfColumns, int scale = 1, RenderMode renderMode = RenderMode::LeftTop);
-		SpriteRenderComponent(GameObject* pOwner, const std::string& filename, int nrOfRows, int nrOfColumns, int width = 0, int height = 0, RenderMode renderMode = RenderMode::LeftTop);
 		~SpriteRenderComponent() override = default;
 
 		void Update() override;
 		void FixedUpdate() override {};
 		void Render() const override;
 		void SetSprite(std::shared_ptr<Texture2D> pTexture, int nrOfRows, int nrOfColumns, const int scale);
+		int GetTextureWidth() const override { return m_FrameWidth * m_Scale; }
+		int GetTextureHeight() const override { return m_FrameHeight * m_Scale; }
 
 		SpriteRenderComponent(const SpriteRenderComponent& other) = delete;
 		SpriteRenderComponent(SpriteRenderComponent&& other) noexcept = delete;

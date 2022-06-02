@@ -10,7 +10,7 @@ dae::TransformComponent::TransformComponent(GameObject* pOwner, const glm::vec2&
 
 void dae::TransformComponent::Update()
 {
-
+	
 }
 
 void dae::TransformComponent::FixedUpdate()

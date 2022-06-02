@@ -1,5 +1,7 @@
 #include "BurgerTimePCH.h"
 #include "BurgerTime.h"
+
+#include "CollisionComponent.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
@@ -102,6 +104,7 @@ void dae::BurgerTime::AddPlayerOne(Scene& scene) const
 	playerObject->AddComponent(new TransformComponent{ playerObject.get(), glm::vec2{m_WindowWidth / 2, m_WindowHeight / 2} });
 	//playerObject->AddComponent(new RenderComponent{ playerObject.get(), 3, RenderMode::CenterBottom, "Idle.png" });
 	playerObject->AddComponent(new SpriteRenderComponent{ playerObject.get(), "Running.png", 1, 4, 3, RenderMode::CenterBottom });
+	playerObject->AddComponent(new CollisionComponent{ playerObject.get() });
 	playerObject->AddComponent(new PlayerControllerComponent{ playerObject.get() });
 	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get() });
 	pMrPepperComponent->AddObserver(pLivesComponent);

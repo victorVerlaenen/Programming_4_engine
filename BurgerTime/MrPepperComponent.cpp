@@ -6,6 +6,7 @@
 #include "IdleState.h"
 #include "MoveCommand.h"
 #include "StopCommand.h"
+#include "TransformComponent.h"
 
 dae::MrPepperComponent::MrPepperComponent(GameObject* pOwner)
 	:Component(pOwner)
@@ -40,6 +41,8 @@ void dae::MrPepperComponent::Initialize()
 void dae::MrPepperComponent::Update()
 {
 	m_pState->Update();
+	
+		//std::cout << "Trans Pos: " << GetOwner()->GetComponent<TransformComponent>()->GetPosition().x << ", " << GetOwner()->GetComponent<TransformComponent>()->GetPosition().y << std::endl;
 }
 
 void dae::MrPepperComponent::FixedUpdate()

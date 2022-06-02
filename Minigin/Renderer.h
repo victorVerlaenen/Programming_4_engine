@@ -30,16 +30,14 @@ namespace dae
 		void Update();
 		void Destroy();
 
-		void RenderTexture(const Texture2D& texture, RenderMode renderMode, float x, float y, int scale = 1) const;
-		void RenderTexture(const Texture2D& texture, RenderMode renderMode, float x, float y, float width, float height) const;
-		void RenderTexture(const Texture2D& texture, RenderMode renderMode, SDL_Rect destRect) const;
-		void RenderTexture(const Texture2D& texture, RenderMode renderMode, SDL_Rect destRect, SDL_Rect srcRect) const;
+		void RenderTexture(const Texture2D& texture,float x, float y, int scale = 1) const;
+		void RenderTexture(const Texture2D& texture, SDL_Rect destRect) const;
+		void RenderTexture(const Texture2D& texture, SDL_Rect destRect, SDL_Rect srcRect) const;
 
 		SDL_Renderer* GetSDLRenderer() const { return m_Renderer; }
 
 		const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
 		void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
 	private:
-		void SetDestRect(RenderMode renderMode, SDL_Rect& destRect) const;
 	};
 }
