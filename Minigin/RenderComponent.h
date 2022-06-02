@@ -21,6 +21,7 @@ namespace dae
 		void Render() const override;
 		virtual int GetTextureWidth() const { return m_Width * m_Scale; }
 		virtual int GetTextureHeight() const { return m_Height * m_Scale; }
+		std::shared_ptr<Texture2D> GetTexture() { return m_pTexture; }
 		glm::vec2 GetPosition() const;
 		RenderMode GetRenderMode() const { return m_RenderMode; }
 

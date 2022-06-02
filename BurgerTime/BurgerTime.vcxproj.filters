@@ -49,9 +49,6 @@
     <Filter Include="Components\Map">
       <UniqueIdentifier>{4ed59fb1-6fbb-4239-b798-87c0c7caa7d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Map\PlatformComponent">
-      <UniqueIdentifier>{893fb3a7-1e15-42df-abf6-657b7dade806}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Map\LadderPlatformComponent">
       <UniqueIdentifier>{7e512f97-805f-4aa1-8c88-86cc438cc4fc}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,9 @@
     </Filter>
     <Filter Include="Components\CollisionComponent">
       <UniqueIdentifier>{a2ce72e7-4b14-4fd7-ba7a-8316f055303d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Map\TileComponent">
+      <UniqueIdentifier>{893fb3a7-1e15-42df-abf6-657b7dade806}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,8 +100,8 @@
     <ClCompile Include="PhysicsBodyComponent.cpp">
       <Filter>Components\PhysicsBodyComponent</Filter>
     </ClCompile>
-    <ClCompile Include="PlatformComponent.cpp">
-      <Filter>Components\Map\PlatformComponent</Filter>
+    <ClCompile Include="TileComponent.cpp">
+      <Filter>Components\Map\TileComponent</Filter>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components\CollisionComponent</Filter>
@@ -141,8 +141,8 @@
     <ClInclude Include="PhysicsBodyComponent.h">
       <Filter>Components\PhysicsBodyComponent</Filter>
     </ClInclude>
-    <ClInclude Include="PlatformComponent.h">
-      <Filter>Components\Map\PlatformComponent</Filter>
+    <ClInclude Include="TileComponent.h">
+      <Filter>Components\Map\TileComponent</Filter>
     </ClInclude>
     <ClInclude Include="CollisionComponent.h">
       <Filter>Components\CollisionComponent</Filter>

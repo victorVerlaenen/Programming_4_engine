@@ -179,7 +179,7 @@
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="MrPepperComponent.cpp" />
     <ClCompile Include="PhysicsBodyComponent.cpp" />
-    <ClCompile Include="PlatformComponent.cpp" />
+    <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="PointsCommand.cpp" />
     <ClCompile Include="StopCommand.cpp" />
   </ItemGroup>
@@ -194,7 +194,7 @@
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="MrPepperComponent.h" />
     <ClInclude Include="PhysicsBodyComponent.h" />
-    <ClInclude Include="PlatformComponent.h" />
+    <ClInclude Include="TileComponent.h" />
     <ClInclude Include="PointsCommand.h" />
     <ClInclude Include="StopCommand.h" />
   </ItemGroup>

@@ -13,5 +13,10 @@ dae::StopCommand::StopCommand(GameObject* actor)
 
 void dae::StopCommand::Execute()
 {
-	GetActor()->GetComponent<MrPepperComponent>()->SetState(std::make_shared<IdleState>(GetActor()));
+	auto mrPepperComp = GetActor()->GetComponent<MrPepperComponent>();
+	/*if (mrPepperComp->GetPrevState()->GetType() == "Move" && mrPepperComp->GetState()->GetType() == "Move")
+	{
+		return;
+	}*/
+	mrPepperComp->SetState(std::make_shared<IdleState>(GetActor()));
 }

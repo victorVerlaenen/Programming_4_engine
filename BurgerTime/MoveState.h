@@ -14,6 +14,7 @@ namespace dae
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
 		virtual void Update() override;
+		virtual std::string GetType() override;
 	private:
 		std::shared_ptr<Texture2D> m_pLeftTexture;
 		std::shared_ptr<Texture2D> m_pRightTexture;
@@ -21,6 +22,7 @@ namespace dae
 		std::shared_ptr<Texture2D> m_pDownTexture;
 		MoveDirection m_MoveDirection;
 		TransformComponent* m_pTransformComponent;
+		MrPepperComponent* m_pMrPepperComponent;
 		const float m_MoveSpeed{ 80.f };
 		glm::vec2 m_Movement;
 	};

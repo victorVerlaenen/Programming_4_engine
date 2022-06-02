@@ -4,6 +4,7 @@
 
 namespace dae
 {
+	class Scene;
 	class Component;
 	class GameObject final
 	{
@@ -11,6 +12,7 @@ namespace dae
 		void Update();
 		void FixedUpdate();
 		void Render() const;
+		Scene* GetScene() const { return m_pScene; }
 		
 		template <typename T>
 		T* AddComponent(T* pComponent)
@@ -40,7 +42,7 @@ namespace dae
 					m_pComponents.erase(m_pComponents.begin() + i);
 		}
 		
-		GameObject() = default;
+		GameObject(Scene* pScene);
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -49,5 +51,6 @@ namespace dae
 
 	private:
 		std::vector<Component*> m_pComponents;
+		Scene* m_pScene;
 	};
 }

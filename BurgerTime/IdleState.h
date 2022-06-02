@@ -12,6 +12,7 @@ namespace dae
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
 		virtual void Update() override;
+		virtual std::string GetType() override;
 	private:
 		std::shared_ptr<Texture2D> m_pTexture;
 	};

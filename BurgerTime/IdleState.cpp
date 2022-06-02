@@ -22,3 +22,8 @@ void dae::IdleState::OnExit()
 void dae::IdleState::Update()
 {
 }
+
+std::string dae::IdleState::GetType()
+{
+	return "Idle";
+}

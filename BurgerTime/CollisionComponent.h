@@ -20,19 +20,23 @@ namespace dae
 		CollisionComponent(GameObject* pOwner, int xPos, int yPos);
 		CollisionComponent(GameObject* pOwner);
 		~CollisionComponent() override = default;
-
-		void Initialize();
+		
 		void Update() override;
 		void FixedUpdate() override;
 		void Render() const override;
+		void AddPlaformMargin(int margin);
+
+		Rect GetShape() const { return m_Shape; }
+		bool IsOverlapping(const Rect& otherShape) const;
+		bool IsBetween(const Rect& otherShape) const;
 
 		CollisionComponent(const CollisionComponent& other) = delete;
 		CollisionComponent(CollisionComponent&& other) = delete;
 		CollisionComponent& operator=(const CollisionComponent& other) = delete;
 		CollisionComponent& operator=(CollisionComponent&& other) = delete;
 	private:
-		bool IsOverlapping(const Rect& shape, const Rect& otherShape) const;
 		Rect m_Shape;
+		int m_Margin{ 0 };
 		Rect m_TestShape{ 0,0,100,400 };
 		RenderComponent* m_pRenderComponent{nullptr};
 		SpriteRenderComponent* m_pSpriteRenderComponent{nullptr};

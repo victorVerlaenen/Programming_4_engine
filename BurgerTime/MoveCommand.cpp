@@ -14,5 +14,6 @@ dae::MoveCommand::MoveCommand(GameObject* actor, MoveDirection moveDirection)
 
 void dae::MoveCommand::Execute()
 {
-	GetActor()->GetComponent<MrPepperComponent>()->SetState(std::make_shared<MoveState>(GetActor(), m_MoveDirection));
+	auto mrPepperComp = GetActor()->GetComponent<MrPepperComponent>();
+	mrPepperComp->SetState(std::make_shared<MoveState>(GetActor(), m_MoveDirection));
 }

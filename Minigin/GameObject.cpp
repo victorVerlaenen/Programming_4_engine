@@ -3,6 +3,11 @@
 #include "Component.h"
 #include "RenderComponent.h"
 
+dae::GameObject::GameObject(Scene* pScene)
+	:m_pScene(pScene)
+{
+}
+
 dae::GameObject::~GameObject()
 {
 	for(auto& pComp : m_pComponents)

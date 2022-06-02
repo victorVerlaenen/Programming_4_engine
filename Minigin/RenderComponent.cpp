@@ -21,8 +21,6 @@ dae::RenderComponent::RenderComponent(GameObject* pOwner, const int scale, Rende
 	, m_RenderMode{ renderMode }
 	, m_Scale(scale)
 	, m_pTexture(nullptr)
-	, m_Width(0)
-	, m_Height(0)
 {
 	if (!filename.empty())
 	{
