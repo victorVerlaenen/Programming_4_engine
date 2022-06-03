@@ -43,7 +43,7 @@ void dae::BurgerTime::LoadBurgerTime() const
 	AddFPSCounter(scene, glm::vec2{ 10,10 }, SDL_Color{ 255, 255, 0 });
 
 	AddPlatforms(scene);
-	auto playerObj = AddPlayerOne(scene);
+	AddPlayerOne(scene);
 	//AddPlayerTwo(scene);
 
 
@@ -95,7 +95,7 @@ dae::GameObject* dae::BurgerTime::AddPlayerOne(Scene& scene) const
 
 	//ScoreDisplayObject
 	const auto scoreObject = std::make_shared<GameObject>(&scene);
-	scoreObject->AddComponent(new TransformComponent{ scoreObject.get(), glm::vec2{m_WindowWidth/2 - 20, 10} });
+	scoreObject->AddComponent(new TransformComponent{ scoreObject.get(), glm::vec2{m_WindowWidth / 2 - 20, 10} });
 	scoreObject->AddComponent(new RenderComponent{ scoreObject.get(), 1, RenderMode::LeftTop });
 	scoreObject->AddComponent(new TextComponent{ scoreObject.get(), font, SDL_Color{0, 255, 0} });
 	auto pScoreComponent = scoreObject->AddComponent(new ScoreComponent{ scoreObject.get() });
@@ -103,9 +103,9 @@ dae::GameObject* dae::BurgerTime::AddPlayerOne(Scene& scene) const
 
 	//PlayerOneObject
 	const auto playerObject = std::make_shared<GameObject>(&scene);
-	playerObject->AddComponent(new TransformComponent{ playerObject.get(), glm::vec2{m_WindowWidth / 2, m_WindowHeight / 2 - 20} });
+	playerObject->AddComponent(new TransformComponent{ playerObject.get(), glm::vec2{62 ,100} });
 	//playerObject->AddComponent(new RenderComponent{ playerObject.get(), 3, RenderMode::CenterBottom, "Idle.png" });
-	playerObject->AddComponent(new SpriteRenderComponent{ playerObject.get(), "Running.png", 1, 4, 3, RenderMode::CenterBottom });
+	playerObject->AddComponent(new SpriteRenderComponent{ playerObject.get(), "Idle.png", 1, 1, 3, RenderMode::CenterBottom });
 	playerObject->AddComponent(new CollisionComponent{ playerObject.get() });
 	playerObject->AddComponent(new PlayerControllerComponent{ playerObject.get() });
 	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get() });
@@ -147,38 +147,218 @@ void dae::BurgerTime::AddPlayerTwo(Scene& scene) const
 
 void dae::BurgerTime::AddPlatforms(Scene& scene) const
 {
-	const auto platform1 = std::make_shared<GameObject>(&scene);
-	auto platform1transform = platform1->AddComponent(new TransformComponent{ platform1.get(), glm::vec2{m_WindowWidth / 2 , m_WindowHeight/2} });
-	auto platform1Render = platform1->AddComponent(new RenderComponent{ platform1.get(), 3 });
-	platform1->AddComponent(new CollisionComponent{ platform1.get()});
-	platform1->AddComponent(new TileComponent{ platform1.get(), TileType::NormalPlaform });
-	scene.Add(platform1);
+	const glm::vec2 startPos = glm::vec2{ 30 , 100 };
 
-	const auto platform2 = std::make_shared<GameObject>(&scene);
-	auto platform2transform = platform2->AddComponent(new TransformComponent{ platform2.get(), platform1transform->GetPosition() + glm::vec2{platform1Render->GetTextureWidth() ,0} });
-	auto platform2Render = platform2->AddComponent(new RenderComponent{ platform2.get(), 3 });
-	platform2->AddComponent(new CollisionComponent{ platform2.get() });
-	platform2->AddComponent(new TileComponent{ platform2.get(), TileType::LadderPlatform });
-	scene.Add(platform2);
+	const auto firstPlatform = std::make_shared<GameObject>(&scene);
+	const auto platformTransform = firstPlatform->AddComponent(new TransformComponent{ firstPlatform.get(), startPos });
+	const auto platformRender = firstPlatform->AddComponent(new RenderComponent{ firstPlatform.get(), 3 });
+	firstPlatform->AddComponent(new CollisionComponent{ firstPlatform.get() });
+	firstPlatform->AddComponent(new TileComponent{ firstPlatform.get(), TileType::LadderPlatform });
+	scene.Add(firstPlatform);
 
-	const auto platform3 = std::make_shared<GameObject>(&scene);
-	auto platform3transform = platform3->AddComponent(new TransformComponent{ platform3.get(),  platform2transform->GetPosition() + glm::vec2{0,platform2Render->GetTextureHeight()} });
-	auto platform3Render = platform3->AddComponent(new RenderComponent{ platform3.get(), 3 });
-	platform3->AddComponent(new CollisionComponent{ platform3.get() });
-	platform3->AddComponent(new TileComponent{ platform3.get(), TileType::Ladder });
-	scene.Add(platform3);
+	const auto tileWidth = glm::vec2{ platformRender->GetTextureWidth(),0 };
+	const auto tileHeight = glm::vec2{ 0,platformRender->GetTextureHeight() };
 
-	const auto platform4 = std::make_shared<GameObject>(&scene);
-	auto platform4transform = platform4->AddComponent(new TransformComponent{ platform4.get(),  platform3transform->GetPosition() + glm::vec2{0,platform2Render->GetTextureHeight()} });
-	auto platform4Render = platform4->AddComponent(new RenderComponent{ platform4.get(), 3 });
-	platform4->AddComponent(new CollisionComponent{ platform4.get() });
-	platform4->AddComponent(new TileComponent{ platform4.get(), TileType::Ladder });
-	scene.Add(platform4);
+	glm::vec2 prevPos = platformTransform->GetPosition();
 
-	const auto platform5 = std::make_shared<GameObject>(&scene);
-	auto platform5transform = platform5->AddComponent(new TransformComponent{ platform5.get(),  platform4transform->GetPosition() + glm::vec2{0,platform2Render->GetTextureHeight()} });
-	auto platform5Render = platform5->AddComponent(new RenderComponent{ platform5.get(), 3 });
-	platform5->AddComponent(new CollisionComponent{ platform5.get() });
-	platform5->AddComponent(new TileComponent{ platform5.get(), TileType::NormalPlaform });
-	scene.Add(platform5);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
+
+	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::NormalPlaform);
+	for (int i{}; i < 17; i++)
+	{
+		prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+	}
 }
+
+glm::vec2 dae::BurgerTime::AddPlatform(Scene& scene, const glm::vec2& pos, TileType type) const
+{
+	const auto platform = std::make_shared<GameObject>(&scene);
+	const auto platformTransform = platform->AddComponent(new TransformComponent{ platform.get(), pos });
+	platform->AddComponent(new RenderComponent{ platform.get(), 3 });
+	platform->AddComponent(new CollisionComponent{ platform.get() });
+	platform->AddComponent(new TileComponent{ platform.get(), type });
+	scene.Add(platform);
+
+	return platformTransform->GetPosition();
+}
+

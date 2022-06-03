@@ -23,8 +23,11 @@ namespace dae
 		void SetStoppable(bool value) { m_Stoppable = value; }
 		bool GetStoppable() const { return m_Stoppable; }
 
+		void MoveToGround();
+
 		bool GetIsOnLadder() const { return m_IsOnLadder; }
 		bool GetIsGrounded() const { return m_IsGrounded; }
+		bool GetCantClimbDown() const { return m_CantClimbdown; }
 		std::shared_ptr<State> GetState() const { return m_pState; }
 		std::shared_ptr<State> GetPrevState() const { return m_pPrevState; }
 
@@ -46,9 +49,11 @@ namespace dae
 		TransformComponent* m_pTransformComponent;
 		std::shared_ptr<State> m_pState;
 		std::shared_ptr<State> m_pPrevState;
+		float m_GroundYPos{ 0 };
 		bool m_Stoppable = true;
 		bool m_IsGrounded = false;
 		bool m_IsOnLadder = false;
+		bool m_CantClimbdown = false;
 		glm::vec2 m_Gravity{ 0,9.81f *2 };
 	};
 }

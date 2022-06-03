@@ -2,6 +2,9 @@
 struct SDL_Window;
 namespace dae
 {
+	enum class TileType;
+	class TransformComponent;
+	class RenderComponent;
 	class GameObject;
 	class Scene;
 	class BurgerTime
@@ -23,10 +26,11 @@ namespace dae
 		GameObject* AddPlayerOne(Scene& scene) const;
 		void AddPlayerTwo(Scene& scene) const;
 		void AddPlatforms(Scene& scene) const;
+		glm::vec2 AddPlatform(Scene& scene, const glm::vec2& pos, TileType type) const;
 
 		SDL_Window* m_Window{};
-		int m_WindowWidth{ 640 };
-		int m_WindowHeight{ 480 };
+		int m_WindowWidth{ 876 };
+		int m_WindowHeight{ 750 };
 	};
 }
 

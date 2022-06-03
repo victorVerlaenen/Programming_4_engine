@@ -1,7 +1,6 @@
 #include "BurgerTimePCH.h"
 #include "CollisionComponent.h"
 #include "RenderComponent.h"
-#include "ResourceManager.h"
 #include "SpriteRenderComponent.h"
 #include "TransformComponent.h"
 

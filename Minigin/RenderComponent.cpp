@@ -52,8 +52,11 @@ glm::vec2 dae::RenderComponent::GetPosition() const
 void dae::RenderComponent::SetTexture(std::shared_ptr<Texture2D> pTexture)
 {
 	m_pTexture = pTexture;
-	m_Width = m_pTexture->GetWidth();
-	m_Height = m_pTexture->GetHeight();
+	if (m_pTexture != nullptr)
+	{
+		m_Width = m_pTexture->GetWidth();
+		m_Height = m_pTexture->GetHeight();
+	}
 }
 
 

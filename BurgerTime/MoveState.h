@@ -25,6 +25,7 @@ namespace dae
 		MrPepperComponent* m_pMrPepperComponent;
 		const float m_MoveSpeed{ 80.f };
 		glm::vec2 m_Movement;
+		bool m_MovingDown = false;
 	};
 }
 

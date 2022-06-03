@@ -56,22 +56,27 @@ void dae::MrPepperComponent::Initialize()
 
 void dae::MrPepperComponent::Update()
 {
-	m_pState->Update();
+	CheckForWorldCollision();
 	if (m_IsGrounded == false && m_IsOnLadder == false)
 	{
 		m_pTransformComponent->Translate(m_Gravity * Clock::GetInstance().GetDeltaTime());
 	}
-
-	CheckForWorldCollision();
+	m_pState->Update();
 	//std::cout << "Trans Pos: " << GetOwner()->GetComponent<TransformComponent>()->GetPosition().x << ", " << GetOwner()->GetComponent<TransformComponent>()->GetPosition().y << std::endl;
 }
 
 void dae::MrPepperComponent::FixedUpdate()
 {
+	
 }
 
 void dae::MrPepperComponent::Render() const
 {
+}
+
+void dae::MrPepperComponent::MoveToGround()
+{
+	m_pTransformComponent->SetPosition(glm::vec2{ m_pTransformComponent->GetPosition().x, m_GroundYPos });
 }
 
 void dae::MrPepperComponent::SetState(std::shared_ptr<State> pState)
@@ -90,15 +95,22 @@ void dae::MrPepperComponent::CheckForWorldCollision()
 	bool ladder = false;
 	bool grounded = false;
 	bool colliding = false;
-	for (int i{}; i < m_pTileColliders.size(); i++)
+	bool cantClimbDown = true;
+	for (size_t i{}; i < m_pTileColliders.size(); i++)
 	{
 		if (m_pTileColliders[i]->IsOverlapping(m_pCollisionComponent->GetShape()))
 		{
 			if (m_pTileComponents[i]->GetTileType() != TileType::Ladder)
 			{
-				if (m_pTransformComponent->GetPosition().y - m_pTileColliders[i]->GetShape().yPos <= m_pTileComponents[i]->GetPlatformMargin())
+
+				if (std::abs(m_pTransformComponent->GetPosition().y - m_pTileColliders[i]->GetShape().yPos) <= m_pTileComponents[i]->GetPlatformMargin()*2)
 				{
+					if (m_pTileComponents[i]->GetTileType() == TileType::LadderPlatform)
+					{
+						cantClimbDown = false;
+					}
 					grounded = true;
+					m_GroundYPos = static_cast<float>(m_pTileColliders[i]->GetShape().yPos + m_pTileComponents[i]->GetPlatformMargin());
 				}
 			}
 
@@ -107,11 +119,17 @@ void dae::MrPepperComponent::CheckForWorldCollision()
 				if (m_pCollisionComponent->IsBetween(m_pTileColliders[i]->GetShape()))
 				{
 					ladder = true;
+
 				}
 			}
 			colliding = true;
 		}
 	}
+	if (grounded == false)
+	{
+		cantClimbDown = false;
+	}
+	m_CantClimbdown = cantClimbDown;
 	SetIsGrounded(grounded);
 	SetIsOnLadder(ladder);
 	if (colliding == false)

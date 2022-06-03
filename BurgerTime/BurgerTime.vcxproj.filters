@@ -49,12 +49,6 @@
     <Filter Include="Components\Map">
       <UniqueIdentifier>{4ed59fb1-6fbb-4239-b798-87c0c7caa7d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Map\LadderPlatformComponent">
-      <UniqueIdentifier>{7e512f97-805f-4aa1-8c88-86cc438cc4fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Map\LadderComponent">
-      <UniqueIdentifier>{90fcc00e-b431-47cf-915d-bf1fe6483ff2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\PhysicsBodyComponent">
       <UniqueIdentifier>{51417d80-4b17-4dbe-894f-060accfeb624}</UniqueIdentifier>
     </Filter>
@@ -63,6 +57,9 @@
     </Filter>
     <Filter Include="Components\Map\TileComponent">
       <UniqueIdentifier>{893fb3a7-1e15-42df-abf6-657b7dade806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Map\IngedientComponent">
+      <UniqueIdentifier>{8cf4036f-1a46-43b7-8ec5-ad9640d5b997}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +103,9 @@
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components\CollisionComponent</Filter>
     </ClCompile>
+    <ClCompile Include="IngredientComponent.cpp">
+      <Filter>Components\Map\IngedientComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DieCommand.h">
@@ -146,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="CollisionComponent.h">
       <Filter>Components\CollisionComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientComponent.h">
+      <Filter>Components\Map\IngedientComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

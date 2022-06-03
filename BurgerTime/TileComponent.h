@@ -38,6 +38,6 @@ namespace dae
 		TransformComponent* m_pPlayerTransformComponent;
 		MrPepperComponent* m_pMrPepperComponent;
 		TileType m_TileType;
-		const int m_PlatformMargin = {4};
+		const int m_PlatformMargin = {10};
 	};
 }

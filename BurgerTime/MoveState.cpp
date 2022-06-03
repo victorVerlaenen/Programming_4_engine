@@ -1,6 +1,7 @@
 #include "BurgerTimePCH.h"
 #include "MoveState.h"
 
+#include "IdleState.h"
 #include "MrPepperComponent.h"
 #include "SpriteRenderComponent.h"
 #include "ResourceManager.h"
@@ -26,6 +27,7 @@ void dae::MoveState::OnEnter()
 	case MoveDirection::Left:
 		if (m_pMrPepperComponent->GetIsGrounded() == true)
 		{
+			m_pMrPepperComponent->MoveToGround();
 			m_pOwner->GetComponent<SpriteRenderComponent>()->SetSprite(m_pLeftTexture, 1, 4, 3);
 			m_Movement = glm::vec2{ -m_MoveSpeed * Clock::GetInstance().GetDeltaTime(), 0 };
 		}
@@ -33,6 +35,7 @@ void dae::MoveState::OnEnter()
 	case MoveDirection::Right:
 		if (m_pMrPepperComponent->GetIsGrounded() == true)
 		{
+			m_pMrPepperComponent->MoveToGround();
 			m_pOwner->GetComponent<SpriteRenderComponent>()->SetSprite(m_pRightTexture, 1, 4, 3);
 			m_Movement = glm::vec2{ m_MoveSpeed * Clock::GetInstance().GetDeltaTime(), 0 };
 		}
@@ -45,10 +48,11 @@ void dae::MoveState::OnEnter()
 		}
 		break;
 	case MoveDirection::Down:
-		if (m_pMrPepperComponent->GetIsOnLadder() == true)
+		if (m_pMrPepperComponent->GetIsOnLadder() == true && m_pMrPepperComponent->GetCantClimbDown() == false)
 		{
 			m_pOwner->GetComponent<SpriteRenderComponent>()->SetSprite(m_pDownTexture, 1, 4, 3);
 			m_Movement = glm::vec2{ 0, m_MoveSpeed * Clock::GetInstance().GetDeltaTime() };
+			m_MovingDown = true;
 		}
 		break;
 	}
@@ -60,6 +64,12 @@ void dae::MoveState::OnExit()
 
 void dae::MoveState::Update()
 {
+	const bool climbDown = m_pMrPepperComponent->GetCantClimbDown();
+	if(climbDown== true && m_MovingDown == true)
+	{
+		m_pMrPepperComponent->SetState(std::make_shared<IdleState>(m_pOwner));
+		return;
+	}
 	m_pTransformComponent->Translate(m_Movement);
 }
 
