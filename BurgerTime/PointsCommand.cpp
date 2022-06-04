@@ -9,5 +9,5 @@ dae::PointsCommand::PointsCommand(GameObject* actor)
 
 void dae::PointsCommand::Execute()
 {
-	GetActor()->GetComponent<MrPepperComponent>()->Notify(GetActor(), Observer::Event::EVENT_PLAYER_POINTS);
+	//GetActor()->GetComponent<MrPepperComponent>()->Notify(GetActor(), Observer::Event::EVENT_PLAYER_POINTS);
 }

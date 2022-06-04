@@ -90,6 +90,7 @@ void dae::Minigin::Run(std::function<void()> loadFunction)
 				lag -= Clock::GetInstance().GetFixedDeltaTime();
 			}
 			sceneManager.Update();
+			sceneManager.LateUpdate();
 			renderer.Render();
 
 			lastTime = currentTime;

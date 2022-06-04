@@ -184,6 +184,8 @@
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="MrPepperComponent.cpp" />
     <ClCompile Include="PhysicsBodyComponent.cpp" />
+    <ClCompile Include="PlateComponent.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="PointsCommand.cpp" />
     <ClCompile Include="StopCommand.cpp" />
@@ -200,6 +202,8 @@
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="MrPepperComponent.h" />
     <ClInclude Include="PhysicsBodyComponent.h" />
+    <ClInclude Include="PlateComponent.h" />
+    <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="PointsCommand.h" />
     <ClInclude Include="StopCommand.h" />

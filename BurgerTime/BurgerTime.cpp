@@ -1,5 +1,6 @@
 #include "BurgerTimePCH.h"
 #include "BurgerTime.h"
+#include <fstream>
 
 #include "CollisionComponent.h"
 #include "GameObject.h"
@@ -12,12 +13,14 @@
 #include "TransformComponent.h"
 #include "TextComponent.h"
 #include "FPSComponent.h"
+#include "IngredientComponent.h"
 #include "PlayerControllerComponent.h"
 #include "LivesComponent.h"
 #include "LoggedAudioSystem.h"
 #include "ScoreComponent.h"
 #include "MrPepperComponent.h"
 #include "NullAudioSystem.h"
+#include "PlateComponent.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderComponent.h"
 #include "StandardAudioSystem.h"
@@ -42,8 +45,10 @@ void dae::BurgerTime::LoadBurgerTime() const
 
 	AddFPSCounter(scene, glm::vec2{ 10,10 }, SDL_Color{ 255, 255, 0 });
 
-	AddPlatforms(scene);
-	AddPlayerOne(scene);
+	const auto scoreObject = AddScoreDisplay(scene);
+	const auto livesObject = AddLivesDisplay(scene);
+	const auto playerObject = AddPlayerOne(scene, livesObject.get());
+	AddMap(scene, playerObject.get(), scoreObject.get(), "Map_1.txt");
 	//AddPlayerTwo(scene);
 
 
@@ -82,27 +87,13 @@ void dae::BurgerTime::AddFPSCounter(Scene& scene, const glm::vec2& pos, const SD
 	scene.Add(FPSCounterObject);
 }
 
-dae::GameObject* dae::BurgerTime::AddPlayerOne(Scene& scene) const
+
+std::shared_ptr<dae::GameObject> dae::BurgerTime::AddPlayerOne(Scene& scene, GameObject* livesObject) const
 {
-	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-
-	//LivesDisplayObject
-	const auto livesObject = std::make_shared<GameObject>(&scene);
-	livesObject->AddComponent(new TransformComponent{ livesObject.get(), glm::vec2{10, m_WindowHeight - 10} });
-	livesObject->AddComponent(new RenderComponent{ livesObject.get(), 3, RenderMode::LeftBottom });
-	auto pLivesComponent = livesObject->AddComponent(new LivesComponent{ livesObject.get() });
-	scene.Add(livesObject);
-
-	//ScoreDisplayObject
-	const auto scoreObject = std::make_shared<GameObject>(&scene);
-	scoreObject->AddComponent(new TransformComponent{ scoreObject.get(), glm::vec2{m_WindowWidth / 2 - 20, 10} });
-	scoreObject->AddComponent(new RenderComponent{ scoreObject.get(), 1, RenderMode::LeftTop });
-	scoreObject->AddComponent(new TextComponent{ scoreObject.get(), font, SDL_Color{0, 255, 0} });
-	auto pScoreComponent = scoreObject->AddComponent(new ScoreComponent{ scoreObject.get() });
-	scene.Add(scoreObject);
+	auto pLivesComponent = livesObject->GetComponent<LivesComponent>();
 
 	//PlayerOneObject
-	const auto playerObject = std::make_shared<GameObject>(&scene);
+	auto playerObject = std::make_shared<GameObject>(&scene);
 	playerObject->AddComponent(new TransformComponent{ playerObject.get(), glm::vec2{62 ,100} });
 	//playerObject->AddComponent(new RenderComponent{ playerObject.get(), 3, RenderMode::CenterBottom, "Idle.png" });
 	playerObject->AddComponent(new SpriteRenderComponent{ playerObject.get(), "Idle.png", 1, 1, 3, RenderMode::CenterBottom });
@@ -110,10 +101,36 @@ dae::GameObject* dae::BurgerTime::AddPlayerOne(Scene& scene) const
 	playerObject->AddComponent(new PlayerControllerComponent{ playerObject.get() });
 	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get() });
 	pMrPepperComponent->AddObserver(pLivesComponent);
-	pMrPepperComponent->AddObserver(pScoreComponent);
-	scene.Add(playerObject);
+	scene.Add(playerObject, 2);
 
-	return playerObject.get();
+	return playerObject;
+}
+
+std::shared_ptr<dae::GameObject> dae::BurgerTime::AddLivesDisplay(Scene& scene) const
+{
+	//LivesDisplayObject
+	auto livesObject = std::make_shared<GameObject>(&scene);
+	livesObject->AddComponent(new TransformComponent{ livesObject.get(), glm::vec2{10, m_WindowHeight - 10} });
+	livesObject->AddComponent(new RenderComponent{ livesObject.get(), 3, RenderMode::LeftBottom });
+	livesObject->AddComponent(new LivesComponent{ livesObject.get() });
+	scene.Add(livesObject);
+
+	return livesObject;
+}
+
+std::shared_ptr<dae::GameObject> dae::BurgerTime::AddScoreDisplay(Scene& scene) const
+{
+	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+
+	//ScoreDisplayObject
+	auto scoreObject = std::make_shared<GameObject>(&scene);
+	scoreObject->AddComponent(new TransformComponent{ scoreObject.get(), glm::vec2{m_WindowWidth / 2 - 20, 10} });
+	scoreObject->AddComponent(new RenderComponent{ scoreObject.get(), 1, RenderMode::LeftTop });
+	scoreObject->AddComponent(new TextComponent{ scoreObject.get(), font, SDL_Color{0, 255, 0} });
+	scoreObject->AddComponent(new ScoreComponent{ scoreObject.get() });
+	scene.Add(scoreObject);
+
+	return scoreObject;
 }
 
 void dae::BurgerTime::AddPlayerTwo(Scene& scene) const
@@ -145,220 +162,139 @@ void dae::BurgerTime::AddPlayerTwo(Scene& scene) const
 	scene.Add(playerObject);
 }
 
-void dae::BurgerTime::AddPlatforms(Scene& scene) const
+void dae::BurgerTime::AddMap(Scene& scene, GameObject* pPlayerObject, GameObject* scoreObject, const std::string& mapFile) const
 {
-	const glm::vec2 startPos = glm::vec2{ 30 , 100 };
+	auto pScoreComponent = scoreObject->GetComponent<ScoreComponent>();
+	auto inputFile = ResourceManager::GetInstance().LoadFile(mapFile);
+	std::string line;
 
-	const auto firstPlatform = std::make_shared<GameObject>(&scene);
-	const auto platformTransform = firstPlatform->AddComponent(new TransformComponent{ firstPlatform.get(), startPos });
-	const auto platformRender = firstPlatform->AddComponent(new RenderComponent{ firstPlatform.get(), 3 });
-	firstPlatform->AddComponent(new CollisionComponent{ firstPlatform.get() });
-	firstPlatform->AddComponent(new TileComponent{ firstPlatform.get(), TileType::LadderPlatform });
-	scene.Add(firstPlatform);
+	glm::vec2 startPos;
+	glm::vec2 tileWidth;
+	glm::vec2 tileHeight;
+	glm::vec2 prevPos;
+	TileType tileType{TileType::NormalPlatform};
 
-	const auto tileWidth = glm::vec2{ platformRender->GetTextureWidth(),0 };
-	const auto tileHeight = glm::vec2{ 0,platformRender->GetTextureHeight() };
-
-	glm::vec2 prevPos = platformTransform->GetPosition();
-
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
-	prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::LadderPlatform);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 4.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-	prevPos = AddPlatform(scene, prevPos + (tileWidth * 2.f), TileType::Ladder);
-
-	prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight, TileType::NormalPlaform);
-	for (int i{}; i < 17; i++)
+	if(!inputFile.is_open())
 	{
-		prevPos = AddPlatform(scene, prevPos + tileWidth, TileType::NormalPlaform);
+		std::cout << "Could not open file: " << "Map_1.txt" << std::endl;
+		return;
+	}
+
+	while(std::getline(inputFile, line))
+	{
+		if(line == "TopBun")
+		{
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::TopBun, pPlayerObject, pScoreComponent);
+			continue;
+		}
+		if(line == "Lettuce")
+		{
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::Lettuce, pPlayerObject, pScoreComponent);
+			continue;
+		}
+		if (line == "Patty")
+		{
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::Patty, pPlayerObject, pScoreComponent);
+			continue;
+		}
+		if (line == "BottomBun")
+		{
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::BottomBun, pPlayerObject, pScoreComponent);
+			continue;
+		}
+		if (line == "Plate")
+		{
+			AddPlate(scene, glm::vec2{ prevPos.x + (tileWidth.x / 2.f), m_WindowHeight - 10 });
+			continue;
+		}
+		std::string tempReader, offsetType, amount;
+		std::istringstream lineStream{ line };
+		while (std::getline(lineStream, tempReader, ';'))
+		{
+			if(tempReader == "w" || tempReader == "h" || tempReader == "hw" || tempReader == "b")
+			{
+				offsetType = tempReader;
+				continue;
+			}
+			if(tempReader == "NormalPlatform")
+			{
+				tileType = TileType::NormalPlatform;
+				continue;
+			}
+			if (tempReader == "LadderPlatform")
+			{
+				tileType = TileType::LadderPlatform;
+				continue;
+			}
+			if (tempReader == "Ladder")
+			{
+				tileType = TileType::Ladder;
+				continue;
+			}
+			amount = tempReader;
+		}
+
+		if(offsetType == "b")
+		{
+			startPos.x = std::stof(amount.substr(0, amount.find(',')));
+			startPos.y = std::stof(amount.substr(amount.find(',')+1));
+
+			const auto firstPlatform = std::make_shared<GameObject>(&scene);
+			const auto platformTransform = firstPlatform->AddComponent(new TransformComponent{ firstPlatform.get(), startPos });
+			const auto platformRender = firstPlatform->AddComponent(new RenderComponent{ firstPlatform.get(), 3 });
+			firstPlatform->AddComponent(new CollisionComponent{ firstPlatform.get() });
+			firstPlatform->AddComponent(new TileComponent{ firstPlatform.get(), pPlayerObject, tileType });
+			scene.Add(firstPlatform);
+
+			tileWidth = glm::vec2{ platformRender->GetTextureWidth(),0 };
+			tileHeight = glm::vec2{ 0,platformRender->GetTextureHeight() };
+
+			prevPos = platformTransform->GetPosition();
+		}
+		if(offsetType == "w")
+		{
+			prevPos = AddPlatform(scene, prevPos + (tileWidth * std::stof(amount)), tileType, pPlayerObject);
+		}
+		if(offsetType == "h")
+		{
+			prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + (tileHeight * std::stof(amount)), tileType, pPlayerObject);
+		}
+		if(offsetType == "hw")
+		{
+			prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * std::stof(amount)), tileType, pPlayerObject);
+		}
 	}
 }
 
-glm::vec2 dae::BurgerTime::AddPlatform(Scene& scene, const glm::vec2& pos, TileType type) const
+glm::vec2 dae::BurgerTime::AddPlatform(Scene& scene, const glm::vec2& pos, TileType type, GameObject* pPlayerObject) const
 {
 	const auto platform = std::make_shared<GameObject>(&scene);
 	const auto platformTransform = platform->AddComponent(new TransformComponent{ platform.get(), pos });
 	platform->AddComponent(new RenderComponent{ platform.get(), 3 });
 	platform->AddComponent(new CollisionComponent{ platform.get() });
-	platform->AddComponent(new TileComponent{ platform.get(), type });
+	platform->AddComponent(new TileComponent{ platform.get(), pPlayerObject, type });
 	scene.Add(platform);
 
 	return platformTransform->GetPosition();
 }
 
+void dae::BurgerTime::AddPlate(Scene& scene, const glm::vec2& pos) const
+{
+	const auto plate = std::make_shared<GameObject>(&scene);
+	plate->AddComponent(new TransformComponent{ plate.get(), pos });
+	plate->AddComponent(new RenderComponent{ plate.get(), 3, RenderMode::CenterBottom, "Plate.png" });
+	plate->AddComponent(new CollisionComponent{ plate.get() });
+	plate->AddComponent(new PlateComponent{ plate.get() });
+	scene.Add(plate);
+}
+
+void dae::BurgerTime::AddIngredient(Scene& scene, const glm::vec2& pos, Ingedient type, GameObject* pPlayerObject, ScoreComponent* pScoreComponent) const
+{
+	const auto ingredient = std::make_shared<GameObject>(&scene);
+	ingredient->AddComponent(new TransformComponent{ ingredient.get(),pos });
+	ingredient->AddComponent(new RenderComponent{ ingredient.get(), 3, RenderMode::CenterBottom });
+	ingredient->AddComponent(new CollisionComponent{ ingredient.get() });
+	const auto ingredientComp = ingredient->AddComponent(new IngredientComponent{ ingredient.get(), pPlayerObject, type });
+	ingredientComp->AddObserver(pScoreComponent);
+	scene.Add(ingredient, 1);
+}

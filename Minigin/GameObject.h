@@ -11,6 +11,7 @@ namespace dae
 	public:
 		void Update();
 		void FixedUpdate();
+		void LateUpdate();
 		void Render() const;
 		Scene* GetScene() const { return m_pScene; }
 		

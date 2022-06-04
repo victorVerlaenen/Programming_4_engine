@@ -5,7 +5,6 @@
 
 namespace dae
 {
-	class TileComponent;
 	class CollisionComponent;
 	class TransformComponent;
 	class PlayerControllerComponent;
@@ -17,44 +16,39 @@ namespace dae
 
 		void Initialize();
 		void Update() override;
-		void FixedUpdate() override;
-		void Render() const override;
-
-		void SetStoppable(bool value) { m_Stoppable = value; }
-		bool GetStoppable() const { return m_Stoppable; }
+		void FixedUpdate() override {};
+		void Render() const override {};
 
 		void MoveToGround();
 
 		bool GetIsOnLadder() const { return m_IsOnLadder; }
 		bool GetIsGrounded() const { return m_IsGrounded; }
 		bool GetCantClimbDown() const { return m_CantClimbdown; }
-		std::shared_ptr<State> GetState() const { return m_pState; }
-		std::shared_ptr<State> GetPrevState() const { return m_pPrevState; }
 
 		void SetState(std::shared_ptr<State> pState);
-		void SetIsOnLadder(bool value) { m_IsOnLadder = value; }
-		void SetIsGrounded(bool value) { m_IsGrounded = value; }
+		void SetGroundYPos(float value) { m_GroundYPos = value; }
 
 		MrPepperComponent(const MrPepperComponent& other) = delete;
 		MrPepperComponent(MrPepperComponent&& other) = delete;
 		MrPepperComponent& operator=(const MrPepperComponent& other) = delete;
 		MrPepperComponent& operator=(MrPepperComponent&& other) = delete;
 	private:
-		void CheckForWorldCollision();
-		
-		std::vector<CollisionComponent*> m_pTileColliders;
-		std::vector<TileComponent*> m_pTileComponents;
+		void CheckAndSetWorldCollision();
+		void ResetTileBooleans();
+
 		PlayerControllerComponent* m_pPlayerControllerComponent;
+
 		CollisionComponent* m_pCollisionComponent;
 		TransformComponent* m_pTransformComponent;
+
 		std::shared_ptr<State> m_pState;
 		std::shared_ptr<State> m_pPrevState;
+
 		float m_GroundYPos{ 0 };
-		bool m_Stoppable = true;
 		bool m_IsGrounded = false;
 		bool m_IsOnLadder = false;
 		bool m_CantClimbdown = false;
-		glm::vec2 m_Gravity{ 0,9.81f *2 };
+		const glm::vec2 m_Gravity{ 0,9.81f * 2 };
 	};
 }
 

@@ -2,6 +2,8 @@
 struct SDL_Window;
 namespace dae
 {
+	class ScoreComponent;
+	enum class Ingedient;
 	enum class TileType;
 	class TransformComponent;
 	class RenderComponent;
@@ -23,12 +25,15 @@ namespace dae
 		void AddDAELogo(Scene& scene) const;
 		void AddText(Scene& scene, const std::string& text, const glm::vec2& pos, const SDL_Color& textColor, unsigned int fontSize) const;
 		void AddFPSCounter(Scene& scene, const glm::vec2& pos, const SDL_Color& textColor) const;
-		GameObject* AddPlayerOne(Scene& scene) const;
+		std::shared_ptr<GameObject> AddPlayerOne(Scene& scene, GameObject* livesObject) const;
+		std::shared_ptr<GameObject> AddScoreDisplay(Scene& scene) const;
+		std::shared_ptr<GameObject> AddLivesDisplay(Scene& scene) const;
 		void AddPlayerTwo(Scene& scene) const;
-		void AddPlatforms(Scene& scene) const;
-		glm::vec2 AddPlatform(Scene& scene, const glm::vec2& pos, TileType type) const;
-
-		SDL_Window* m_Window{};
+		void AddMap(Scene& scene, GameObject* pPlayerObject, GameObject* scoreObject, const std::string& mapFile) const;
+		glm::vec2 AddPlatform(Scene& scene, const glm::vec2& pos, TileType type, GameObject* pPlayerObject) const;
+		void AddIngredient(Scene& scene, const glm::vec2& pos, Ingedient type, GameObject* pPlayerObject, ScoreComponent* pScoreComponent) const;
+		void AddPlate(Scene& scene, const glm::vec2& pos) const;
+		
 		int m_WindowWidth{ 876 };
 		int m_WindowHeight{ 750 };
 	};

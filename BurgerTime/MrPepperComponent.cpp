@@ -8,14 +8,13 @@
 #include "StopCommand.h"
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
-#include "Scene.h"
 #include "TileComponent.h"
 
 dae::MrPepperComponent::MrPepperComponent(GameObject* pOwner)
 	:Component(pOwner)
 	, m_pPlayerControllerComponent{ GetOwner()->GetComponent<PlayerControllerComponent>() }
-	, m_pTransformComponent(GetOwner()->GetComponent<TransformComponent>())
 	, m_pCollisionComponent(GetOwner()->GetComponent<CollisionComponent>())
+	, m_pTransformComponent(GetOwner()->GetComponent<TransformComponent>())
 	, m_pState(nullptr)
 {
 	Initialize();
@@ -42,36 +41,37 @@ void dae::MrPepperComponent::Initialize()
 
 	m_pState = std::make_shared<IdleState>(GetOwner());
 	m_pPrevState = std::make_shared<IdleState>(GetOwner());
-
-	const auto objects = GetOwner()->GetScene()->GetObjects();
-	for (auto object : objects)
-	{
-		if (object->GetComponent<TileComponent>() != nullptr)
-		{
-			m_pTileComponents.emplace_back(object->GetComponent<TileComponent>());
-			m_pTileColliders.emplace_back(object->GetComponent<CollisionComponent>());
-		}
-	}
 }
 
 void dae::MrPepperComponent::Update()
 {
-	CheckForWorldCollision();
+	//CheckAndSetWorldCollision();
+	if (TileComponent::m_Grounded == false)
+	{
+		TileComponent::m_CantClimbDown = false;
+	}
+	m_CantClimbdown = TileComponent::m_CantClimbDown;
+	m_IsGrounded = TileComponent::m_Grounded;
+	m_IsOnLadder = TileComponent::m_Ladder;
+	if (TileComponent::m_Colliding == false)
+	{
+		SetState(std::make_shared<IdleState>(GetOwner()));
+	}
+
+
+
+
 	if (m_IsGrounded == false && m_IsOnLadder == false)
 	{
 		m_pTransformComponent->Translate(m_Gravity * Clock::GetInstance().GetDeltaTime());
 	}
 	m_pState->Update();
-	//std::cout << "Trans Pos: " << GetOwner()->GetComponent<TransformComponent>()->GetPosition().x << ", " << GetOwner()->GetComponent<TransformComponent>()->GetPosition().y << std::endl;
-}
 
-void dae::MrPepperComponent::FixedUpdate()
-{
-	
-}
-
-void dae::MrPepperComponent::Render() const
-{
+	//ResetTileBooleans();
+	TileComponent::m_Ladder = false;
+	TileComponent::m_Grounded = false;
+	TileComponent::m_Colliding = false;
+	TileComponent::m_CantClimbDown = true;
 }
 
 void dae::MrPepperComponent::MoveToGround()
@@ -90,50 +90,25 @@ void dae::MrPepperComponent::SetState(std::shared_ptr<State> pState)
 	m_pState->OnEnter();
 }
 
-void dae::MrPepperComponent::CheckForWorldCollision()
+void dae::MrPepperComponent::CheckAndSetWorldCollision()
 {
-	bool ladder = false;
-	bool grounded = false;
-	bool colliding = false;
-	bool cantClimbDown = true;
-	for (size_t i{}; i < m_pTileColliders.size(); i++)
+	/*if (TileComponent::m_Grounded == false)
 	{
-		if (m_pTileColliders[i]->IsOverlapping(m_pCollisionComponent->GetShape()))
-		{
-			if (m_pTileComponents[i]->GetTileType() != TileType::Ladder)
-			{
-
-				if (std::abs(m_pTransformComponent->GetPosition().y - m_pTileColliders[i]->GetShape().yPos) <= m_pTileComponents[i]->GetPlatformMargin()*2)
-				{
-					if (m_pTileComponents[i]->GetTileType() == TileType::LadderPlatform)
-					{
-						cantClimbDown = false;
-					}
-					grounded = true;
-					m_GroundYPos = static_cast<float>(m_pTileColliders[i]->GetShape().yPos + m_pTileComponents[i]->GetPlatformMargin());
-				}
-			}
-
-			if (m_pTileComponents[i]->GetTileType() == TileType::LadderPlatform || m_pTileComponents[i]->GetTileType() == TileType::Ladder)
-			{
-				if (m_pCollisionComponent->IsBetween(m_pTileColliders[i]->GetShape()))
-				{
-					ladder = true;
-
-				}
-			}
-			colliding = true;
-		}
+		TileComponent::m_CantClimbDown = false;
 	}
-	if (grounded == false)
-	{
-		cantClimbDown = false;
-	}
-	m_CantClimbdown = cantClimbDown;
-	SetIsGrounded(grounded);
-	SetIsOnLadder(ladder);
-	if (colliding == false)
+	m_CantClimbdown = TileComponent::m_CantClimbDown;
+	m_IsGrounded = TileComponent::m_Grounded;
+	m_IsOnLadder = TileComponent::m_Ladder;
+	if (TileComponent::m_Colliding == false)
 	{
 		SetState(std::make_shared<IdleState>(GetOwner()));
-	}
+	}*/
+}
+
+void dae::MrPepperComponent::ResetTileBooleans()
+{
+	/*TileComponent::m_Ladder = false;
+	TileComponent::m_Grounded = false;
+	TileComponent::m_Colliding = false;
+	TileComponent::m_CantClimbDown = true;*/
 }

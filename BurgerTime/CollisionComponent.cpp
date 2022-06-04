@@ -79,6 +79,22 @@ bool dae::CollisionComponent::IsOverlapping(const Rect& otherShape) const
 	return true;
 }
 
+bool dae::CollisionComponent::IsOverlapping(const glm::vec2& point) const
+{
+	// If one rectangle is on left side of the other
+	if (point.x < m_Shape.xPos || (m_Shape.xPos + m_Shape.width) < point.x)
+	{
+		return false;
+	}
+
+	// If one rectangle is under the other
+	if (point.y > (m_Shape.yPos + m_Shape.height) || point.y < m_Shape.yPos)
+	{
+		return false;
+	}
+	return true;
+}
+
 bool dae::CollisionComponent::IsBetween(const Rect& otherShape) const
 {
 	if (m_Shape.xPos + 8 < otherShape.xPos || (m_Shape.xPos + m_Shape.width - 8) > (otherShape.xPos + otherShape.width))

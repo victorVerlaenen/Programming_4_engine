@@ -1,4 +1,4 @@
-#include "MiniginPCH.h"
+#include "BurgerTimePCH.h"
 #include "ScoreComponent.h"
 #include "TextComponent.h"
 
@@ -24,7 +24,7 @@ void dae::ScoreComponent::Render() const
 
 void dae::ScoreComponent::OnNotify(GameObject*, const Event& event)
 {
-	if (event == Observer::Event::EVENT_PLAYER_POINTS)
+	if (event == Event::EVENT_PLAYER_POINTS)
 	{
 		m_Score += 50;
 		m_pTextComponent->SetText("SCORE: " + std::to_string(m_Score));

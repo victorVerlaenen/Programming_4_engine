@@ -58,15 +58,6 @@
     <Filter Include="Observer Files\Observer">
       <UniqueIdentifier>{ad2005db-3af6-4341-8617-77697e3824ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component Files\MrPepperComponent">
-      <UniqueIdentifier>{d16a0285-7b5c-4d8d-9993-f53339846f2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component Files\LivesComponent">
-      <UniqueIdentifier>{1668d01f-251f-4ce8-9550-09c4e2f84e1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component Files\ScoreComponent">
-      <UniqueIdentifier>{f174992b-428e-45bc-bb2c-f5282a7ca6a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Commands\GetPoints">
       <UniqueIdentifier>{c359a55f-5b5a-42a5-a7a3-1e7724fb7ca0}</UniqueIdentifier>
     </Filter>
@@ -201,9 +192,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Observer Files\Subject</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Component Files\ScoreComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Audio.h">
       <Filter>SoundSystem\Audio</Filter>
     </ClInclude>
@@ -319,9 +307,6 @@
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>Observer Files\Subject</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Component Files\ScoreComponent</Filter>
     </ClCompile>
     <ClCompile Include="Audio.cpp">
       <Filter>SoundSystem\Audio</Filter>

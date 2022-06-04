@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <fstream>
 
 #include "Renderer.h"
 #include "Texture2D.h"
@@ -43,4 +44,10 @@ std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::str
 std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
 	return std::make_shared<Font>(m_DataPath + file, size);
+}
+
+std::ifstream dae::ResourceManager::LoadFile(const std::string& file) const
+{
+	const auto fullPath = m_DataPath + file;
+	return std::ifstream{ fullPath };
 }

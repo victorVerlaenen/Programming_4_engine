@@ -33,6 +33,14 @@ void dae::GameObject::FixedUpdate()
 	}
 }
 
+void dae::GameObject::LateUpdate()
+{
+	for (const auto pComp : m_pComponents)
+	{
+		pComp->LateUpdate();
+	}
+}
+
 void dae::GameObject::Render() const
 {
 	//Gotta check if there is a beter solution to check this because a dynamic cast in hot code pad is not good

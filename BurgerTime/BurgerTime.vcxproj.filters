@@ -61,6 +61,12 @@
     <Filter Include="Components\Map\IngedientComponent">
       <UniqueIdentifier>{8cf4036f-1a46-43b7-8ec5-ad9640d5b997}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Map\PlateComponent">
+      <UniqueIdentifier>{0007356a-8493-4732-b6d0-41c82539b757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ScoreComponent">
+      <UniqueIdentifier>{c797622e-4518-49f7-bae5-0c94ce047d41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -106,6 +112,12 @@
     <ClCompile Include="IngredientComponent.cpp">
       <Filter>Components\Map\IngedientComponent</Filter>
     </ClCompile>
+    <ClCompile Include="PlateComponent.cpp">
+      <Filter>Components\Map\PlateComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components\ScoreComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DieCommand.h">
@@ -149,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="IngredientComponent.h">
       <Filter>Components\Map\IngedientComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PlateComponent.h">
+      <Filter>Components\Map\PlateComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components\ScoreComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
