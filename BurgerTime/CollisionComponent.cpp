@@ -9,6 +9,20 @@ dae::CollisionComponent::CollisionComponent(GameObject* pOwner)
 	, m_pRenderComponent{ pOwner->GetComponent<RenderComponent>() }
 	, m_pSpriteRenderComponent{ pOwner->GetComponent<SpriteRenderComponent>() }
 {
+	if (m_pSpriteRenderComponent != nullptr)
+	{
+		m_Shape.xPos = static_cast<int>(m_pSpriteRenderComponent->GetPosition().x);
+		m_Shape.yPos = static_cast<int>(m_pSpriteRenderComponent->GetPosition().y) - m_Margin;
+		m_Shape.width = m_pSpriteRenderComponent->GetTextureWidth();
+		m_Shape.height = m_pSpriteRenderComponent->GetTextureHeight() + m_Margin;
+	}
+	else
+	{
+		m_Shape.xPos = static_cast<int>(m_pRenderComponent->GetPosition().x);
+		m_Shape.yPos = static_cast<int>(m_pRenderComponent->GetPosition().y) - m_Margin;
+		m_Shape.width = m_pRenderComponent->GetTextureWidth();
+		m_Shape.height = m_pRenderComponent->GetTextureHeight() + m_Margin;
+	}
 }
 
 dae::CollisionComponent::CollisionComponent(GameObject* pOwner, int xPos, int yPos)
@@ -17,6 +31,7 @@ dae::CollisionComponent::CollisionComponent(GameObject* pOwner, int xPos, int yP
 	, m_pSpriteRenderComponent{ pOwner->GetComponent<SpriteRenderComponent>() }
 	, m_Shape(Rect{ xPos,yPos,0,0 })
 {
+
 }
 
 dae::CollisionComponent::CollisionComponent(GameObject* pOwner, int xPos, int yPos, int width, int height)
@@ -95,9 +110,9 @@ bool dae::CollisionComponent::IsOverlapping(const glm::vec2& point) const
 	return true;
 }
 
-bool dae::CollisionComponent::IsBetween(const Rect& otherShape) const
+bool dae::CollisionComponent::IsBetween(const Rect& otherShape, int margin) const
 {
-	if (m_Shape.xPos + 8 < otherShape.xPos || (m_Shape.xPos + m_Shape.width - 8) > (otherShape.xPos + otherShape.width))
+	if (otherShape.xPos + margin < m_Shape.xPos || (otherShape.xPos + otherShape.width - margin) > (m_Shape.xPos + m_Shape.width))
 	{
 		return false;
 	}

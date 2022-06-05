@@ -27,6 +27,8 @@ dae::RenderComponent::RenderComponent(GameObject* pOwner, const int scale, Rende
 		m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 		m_Width = m_pTexture->GetWidth();
 		m_Height = m_pTexture->GetHeight();
+		m_Position = m_pTransformComponent->GetPosition();
+		SetPos(m_RenderMode, m_Position);
 	}
 }
 

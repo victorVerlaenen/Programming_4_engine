@@ -14,6 +14,8 @@ dae::SpriteRenderComponent::SpriteRenderComponent(GameObject* pOwner, const std:
 {
 	m_FrameWidth = m_pTexture->GetWidth() / nrOfColumns;
 	m_FrameHeight = m_pTexture->GetHeight() / nrOfRows;
+	m_Position = m_pTransformComponent->GetPosition();
+	SetPos(m_RenderMode, m_Position);
 }
 
 

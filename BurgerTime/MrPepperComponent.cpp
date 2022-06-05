@@ -8,7 +8,6 @@
 #include "StopCommand.h"
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
-#include "TileComponent.h"
 
 dae::MrPepperComponent::MrPepperComponent(GameObject* pOwner)
 	:Component(pOwner)
@@ -45,33 +44,25 @@ void dae::MrPepperComponent::Initialize()
 
 void dae::MrPepperComponent::Update()
 {
-	//CheckAndSetWorldCollision();
-	if (TileComponent::m_Grounded == false)
+	
+}
+
+void dae::MrPepperComponent::LateUpdate()
+{
+	if (m_IsGrounded == false)
 	{
-		TileComponent::m_CantClimbDown = false;
+		m_CantClimbdown = false;
 	}
-	m_CantClimbdown = TileComponent::m_CantClimbDown;
-	m_IsGrounded = TileComponent::m_Grounded;
-	m_IsOnLadder = TileComponent::m_Ladder;
-	if (TileComponent::m_Colliding == false)
+	if (m_Colliding == false)
 	{
 		SetState(std::make_shared<IdleState>(GetOwner()));
 	}
-
-
-
 
 	if (m_IsGrounded == false && m_IsOnLadder == false)
 	{
 		m_pTransformComponent->Translate(m_Gravity * Clock::GetInstance().GetDeltaTime());
 	}
 	m_pState->Update();
-
-	//ResetTileBooleans();
-	TileComponent::m_Ladder = false;
-	TileComponent::m_Grounded = false;
-	TileComponent::m_Colliding = false;
-	TileComponent::m_CantClimbDown = true;
 }
 
 void dae::MrPepperComponent::MoveToGround()
@@ -88,27 +79,4 @@ void dae::MrPepperComponent::SetState(std::shared_ptr<State> pState)
 	}
 	m_pState = pState;
 	m_pState->OnEnter();
-}
-
-void dae::MrPepperComponent::CheckAndSetWorldCollision()
-{
-	/*if (TileComponent::m_Grounded == false)
-	{
-		TileComponent::m_CantClimbDown = false;
-	}
-	m_CantClimbdown = TileComponent::m_CantClimbDown;
-	m_IsGrounded = TileComponent::m_Grounded;
-	m_IsOnLadder = TileComponent::m_Ladder;
-	if (TileComponent::m_Colliding == false)
-	{
-		SetState(std::make_shared<IdleState>(GetOwner()));
-	}*/
-}
-
-void dae::MrPepperComponent::ResetTileBooleans()
-{
-	/*TileComponent::m_Ladder = false;
-	TileComponent::m_Grounded = false;
-	TileComponent::m_Colliding = false;
-	TileComponent::m_CantClimbDown = true;*/
 }

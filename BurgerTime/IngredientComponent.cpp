@@ -2,11 +2,8 @@
 #include "IngredientComponent.h"
 
 #include "ResourceManager.h"
-#include "CollisionComponent.h"
 #include "PlateComponent.h"
-#include "PlayerControllerComponent.h"
 #include "RenderComponent.h"
-#include "Scene.h"
 #include "TileComponent.h"
 #include "TransformComponent.h"
 
@@ -40,6 +37,7 @@ dae::IngredientComponent::IngredientComponent(GameObject* pOwner, GameObject* pP
 		m_pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Bottom_Bun.png"));
 		break;
 	}
+	SetCollisionPieces();
 
 	m_pPlayerCollisionComponent = pPlayerObject->GetComponent<CollisionComponent>();
 	m_pPlayerTransformComponent = pPlayerObject->GetComponent<TransformComponent>();
@@ -49,19 +47,45 @@ dae::IngredientComponent::IngredientComponent(GameObject* pOwner, GameObject* pP
 
 void dae::IngredientComponent::Update()
 {
+	SetCollisionPieces();
 	switch (m_IngredientState)
 	{
 	case IngedientState::OnPlatform:
 		m_Timer = 0;
-		if (m_pPlayerCollisionComponent->IsOverlapping(m_pCollisionComponent->GetShape()))
+		if (m_pCollisionComponent->IsOverlapping(m_pPlayerCollisionComponent->GetShape()))
 		{
-			if (m_pPlayerTransformComponent->GetPosition().x < m_pTransformComponent->GetPosition().x + 10 && m_pPlayerTransformComponent->GetPosition().x > m_pTransformComponent->GetPosition().x - 10)
+			if (m_pPlayerCollisionComponent->IsBetween(m_LeftPiece))
 			{
-				m_IngredientState = IngedientState::Falling;
+				std::cout << "Left\n";
+				m_LeftWalked = true;
 			}
+			if (m_pPlayerCollisionComponent->IsBetween(m_MiddleLeftPiece))
+			{
+				std::cout << "MiddleLeft\n";
+				m_MiddleLeftWalked = true;
+			}
+			if (m_pPlayerCollisionComponent->IsBetween(m_MiddleRightPiece))
+			{
+				std::cout << "MiddleRight\n";
+				m_MiddleRightWalked = true;
+			}
+			if (m_pPlayerCollisionComponent->IsBetween(m_RightPiece))
+			{
+				std::cout << "Right\n";
+				m_RightWalked = true;
+			}
+		}
+		if(m_LeftWalked && m_MiddleLeftWalked && m_MiddleRightWalked && m_RightWalked)
+		{
+			m_IngredientState = IngedientState::Falling;
 		}
 		break;
 	case IngedientState::Falling:
+		m_RightWalked = false;
+		m_MiddleRightWalked = false;
+		m_MiddleLeftWalked = false;
+		m_LeftWalked = false;
+
 		m_pTransformComponent->Translate(glm::vec2{ 0, 80 * Clock::GetInstance().GetDeltaTime() });
 		m_Timer += Clock::GetInstance().GetDeltaTime();
 		for (auto tileComp : TileComponent::m_pTileComponents)
@@ -119,4 +143,16 @@ void dae::IngredientComponent::FixedUpdate()
 
 void dae::IngredientComponent::Render() const
 {
+}
+
+void dae::IngredientComponent::SetCollisionPieces()
+{
+	m_LeftPiece = m_pCollisionComponent->GetShape();
+	m_LeftPiece.width = m_LeftPiece.width / 4;
+	m_MiddleLeftPiece = m_LeftPiece;
+	m_MiddleLeftPiece.xPos += m_MiddleLeftPiece.width;
+	m_MiddleRightPiece = m_MiddleLeftPiece;
+	m_MiddleRightPiece.xPos += m_MiddleRightPiece.width;
+	m_RightPiece = m_MiddleRightPiece;
+	m_RightPiece.xPos += m_RightPiece.width;
 }

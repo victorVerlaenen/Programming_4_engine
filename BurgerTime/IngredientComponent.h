@@ -1,4 +1,5 @@
 #pragma once
+#include "CollisionComponent.h"
 #include "Component.h"
 #include "Subject.h"
 
@@ -45,6 +46,7 @@ namespace dae
 
 		static std::vector<IngredientComponent*> m_pIngredients;
 	private:
+		void SetCollisionPieces();
 		std::vector<CollisionComponent*> m_pTileColliders;
 		std::vector<TileComponent*> m_pTileComponents;
 
@@ -56,7 +58,14 @@ namespace dae
 		TransformComponent* m_pTransformComponent;
 		
 		IngedientState m_IngredientState;
-
+		Rect m_LeftPiece;
+		Rect m_MiddleLeftPiece;
+		Rect m_RightPiece;
+		Rect m_MiddleRightPiece;
+		bool m_LeftWalked = false;
+		bool m_MiddleLeftWalked = false;
+		bool m_RightWalked = false;
+		bool m_MiddleRightWalked = false;
 		float m_Timer{ 0.f };
 		const float m_FallingCooldown{ 1.f };
 	};

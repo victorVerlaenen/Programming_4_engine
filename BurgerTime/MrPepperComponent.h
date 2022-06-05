@@ -18,6 +18,7 @@ namespace dae
 		void Update() override;
 		void FixedUpdate() override {};
 		void Render() const override {};
+		void LateUpdate() override;
 
 		void MoveToGround();
 
@@ -27,15 +28,16 @@ namespace dae
 
 		void SetState(std::shared_ptr<State> pState);
 		void SetGroundYPos(float value) { m_GroundYPos = value; }
+		void SetIsGrounded(bool value) { m_IsGrounded = value; }
+		void SetIsOnLadder(bool value) { m_IsOnLadder = value; }
+		void SetColliding(bool value) { m_Colliding = value; }
+		void SetCantClimbDown(bool value) { m_CantClimbdown = value; }
 
 		MrPepperComponent(const MrPepperComponent& other) = delete;
 		MrPepperComponent(MrPepperComponent&& other) = delete;
 		MrPepperComponent& operator=(const MrPepperComponent& other) = delete;
 		MrPepperComponent& operator=(MrPepperComponent&& other) = delete;
 	private:
-		void CheckAndSetWorldCollision();
-		void ResetTileBooleans();
-
 		PlayerControllerComponent* m_pPlayerControllerComponent;
 
 		CollisionComponent* m_pCollisionComponent;
@@ -47,7 +49,8 @@ namespace dae
 		float m_GroundYPos{ 0 };
 		bool m_IsGrounded = false;
 		bool m_IsOnLadder = false;
-		bool m_CantClimbdown = false;
+		bool m_CantClimbdown = true;
+		bool m_Colliding = false;
 		const glm::vec2 m_Gravity{ 0,9.81f * 2 };
 	};
 }

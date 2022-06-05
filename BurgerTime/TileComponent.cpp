@@ -6,11 +6,6 @@
 #include "ResourceManager.h"
 #include "TransformComponent.h"
 
-bool dae::TileComponent::m_Ladder = false;
-bool dae::TileComponent::m_Grounded = false;
-bool dae::TileComponent::m_Colliding = false;
-bool dae::TileComponent::m_CantClimbDown = true;
-
 std::vector<dae::TileComponent*> dae::TileComponent::m_pTileComponents = {};
 
 dae::TileComponent::TileComponent(GameObject* pOwner, GameObject* pPlayerObject, TileType tileType)
@@ -43,6 +38,14 @@ dae::TileComponent::TileComponent(GameObject* pOwner, GameObject* pPlayerObject,
 
 void dae::TileComponent::Update()
 {
+	m_pMrPepperComponent->SetIsOnLadder(false);
+	m_pMrPepperComponent->SetIsGrounded(false);
+	m_pMrPepperComponent->SetColliding(false);
+	m_pMrPepperComponent->SetCantClimbDown(true);
+}
+
+void dae::TileComponent::LateUpdate()
+{
 	if (m_pCollisionComponent->IsOverlapping(m_pPlayerCollisionComponent->GetShape()))
 	{
 		if (m_TileType != TileType::Ladder)
@@ -52,21 +55,20 @@ void dae::TileComponent::Update()
 			{
 				if (m_TileType == TileType::LadderPlatform)
 				{
-					m_CantClimbDown = false;
+					m_pMrPepperComponent->SetCantClimbDown(false);//
 				}
-				m_Grounded = true;
+				m_pMrPepperComponent->SetIsGrounded(true);//
 				m_pMrPepperComponent->SetGroundYPos(static_cast<float>(m_pCollisionComponent->GetShape().yPos + GetPlatformMargin()));
 			}
 		}
 
 		if (m_TileType == TileType::LadderPlatform || m_TileType == TileType::Ladder)
 		{
-			if (m_pPlayerCollisionComponent->IsBetween(m_pCollisionComponent->GetShape()))
+			if (m_pCollisionComponent->IsBetween(m_pPlayerCollisionComponent->GetShape(), 8))
 			{
-				m_Ladder = true;
-
+				m_pMrPepperComponent->SetIsOnLadder(true);//
 			}
 		}
-		m_Colliding = true;
+		m_pMrPepperComponent->SetColliding(true);//
 	}
 }

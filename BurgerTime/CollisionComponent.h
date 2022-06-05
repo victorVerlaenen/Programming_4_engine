@@ -29,7 +29,7 @@ namespace dae
 		Rect GetShape() const { return m_Shape; }
 		bool IsOverlapping(const Rect& otherShape) const;
 		bool IsOverlapping(const glm::vec2& point) const;
-		bool IsBetween(const Rect& otherShape) const;
+		bool IsBetween(const Rect& otherShape, int margin = 0) const;
 
 		CollisionComponent(const CollisionComponent& other) = delete;
 		CollisionComponent(CollisionComponent&& other) = delete;

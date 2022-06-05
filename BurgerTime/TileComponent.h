@@ -25,6 +25,7 @@ namespace dae
 		void Update() override;
 		void FixedUpdate() override{};
 		void Render() const override{};
+		void LateUpdate() override;
 
 		int GetPlatformMargin()const { return m_PlatformMargin; }
 		CollisionComponent* GetCollider() const { return m_pCollisionComponent; }
@@ -46,10 +47,5 @@ namespace dae
 
 		TileType m_TileType;
 		const int m_PlatformMargin = {10};
-
-		static bool m_Ladder;
-		static bool m_Grounded;
-		static bool m_Colliding;
-		static bool m_CantClimbDown;
 	};
 }
