@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "box2d/box2d.h"
 
 namespace dae
 {
