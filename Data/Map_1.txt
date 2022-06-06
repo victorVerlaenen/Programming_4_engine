@@ -1,3 +1,8 @@
+p;438,556;
+e;814,100;
+e;62,100;
+e;62,556;
+e;814,556;
 b;30,100;LadderPlatform;
 w;1;NormalPlatform;
 w;1;NormalPlatform;

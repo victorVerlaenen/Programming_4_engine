@@ -25,9 +25,6 @@
     <Filter Include="Components\LivesComponent">
       <UniqueIdentifier>{75306034-cfcc-47ae-b32f-31620fd1ef89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\MrPepperComponent">
-      <UniqueIdentifier>{34fc81ad-c06d-487d-baae-84ea64c1a72a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BurgerTime">
       <UniqueIdentifier>{6400a6fd-572f-4253-ac7e-7708a1e41dd3}</UniqueIdentifier>
     </Filter>
@@ -67,6 +64,18 @@
     <Filter Include="Components\ScoreComponent">
       <UniqueIdentifier>{c797622e-4518-49f7-bae5-0c94ce047d41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\ActorComponents">
+      <UniqueIdentifier>{5f424537-020b-43b6-b5a1-2d86d27a59cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ActorComponents\MrPepperComponent">
+      <UniqueIdentifier>{34fc81ad-c06d-487d-baae-84ea64c1a72a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ActorComponents\EnemyComponent">
+      <UniqueIdentifier>{3156ffcd-8ece-4a03-98ac-ad4945c16bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\EnemyMoveState">
+      <UniqueIdentifier>{bf12fae1-ba00-4188-a60b-ab205377043a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -83,7 +92,7 @@
       <Filter>Components\LivesComponent</Filter>
     </ClCompile>
     <ClCompile Include="MrPepperComponent.cpp">
-      <Filter>Components\MrPepperComponent</Filter>
+      <Filter>Components\ActorComponents\MrPepperComponent</Filter>
     </ClCompile>
     <ClCompile Include="BurgerTime.cpp">
       <Filter>BurgerTime</Filter>
@@ -118,6 +127,15 @@
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Components\ScoreComponent</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyComponent.cpp">
+      <Filter>Components\ActorComponents\EnemyComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Components\ActorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMoveState.cpp">
+      <Filter>States\EnemyMoveState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DieCommand.h">
@@ -133,7 +151,7 @@
       <Filter>Components\LivesComponent</Filter>
     </ClInclude>
     <ClInclude Include="MrPepperComponent.h">
-      <Filter>Components\MrPepperComponent</Filter>
+      <Filter>Components\ActorComponents\MrPepperComponent</Filter>
     </ClInclude>
     <ClInclude Include="BurgerTime.h">
       <Filter>BurgerTime</Filter>
@@ -167,6 +185,18 @@
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Components\ScoreComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyComponent.h">
+      <Filter>Components\ActorComponents\EnemyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Components\ActorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMoveState.h">
+      <Filter>States\EnemyMoveState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

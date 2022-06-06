@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "CollisionComponent.h"
+#include "EnemyComponent.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
@@ -44,11 +45,8 @@ void dae::BurgerTime::LoadBurgerTime() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	AddFPSCounter(scene, glm::vec2{ 10,10 }, SDL_Color{ 255, 255, 0 });
-
-	const auto scoreObject = AddScoreDisplay(scene);
-	const auto livesObject = AddLivesDisplay(scene);
-	const auto playerObject = AddPlayerOne(scene, livesObject.get());
-	AddMap(scene, playerObject.get(), scoreObject.get(), "Map_1.txt");
+	
+	LoadMap(scene, "Map_1.txt");
 	//AddPlayerTwo(scene);
 
 
@@ -88,22 +86,31 @@ void dae::BurgerTime::AddFPSCounter(Scene& scene, const glm::vec2& pos, const SD
 }
 
 
-std::shared_ptr<dae::GameObject> dae::BurgerTime::AddPlayerOne(Scene& scene, GameObject* livesObject) const
+std::shared_ptr<dae::GameObject> dae::BurgerTime::AddPlayer(Scene& scene, LivesComponent* pLivesComponent, const glm::vec2& pos) const
 {
-	auto pLivesComponent = livesObject->GetComponent<LivesComponent>();
-
 	//PlayerOneObject
 	auto playerObject = std::make_shared<GameObject>(&scene);
-	playerObject->AddComponent(new TransformComponent{ playerObject.get(), glm::vec2{62 ,100} });
+	playerObject->AddComponent(new TransformComponent{ playerObject.get(),pos });
 	//playerObject->AddComponent(new RenderComponent{ playerObject.get(), 3, RenderMode::CenterBottom, "Idle.png" });
 	playerObject->AddComponent(new SpriteRenderComponent{ playerObject.get(), "Idle.png", 1, 1, 3, RenderMode::CenterBottom });
 	playerObject->AddComponent(new CollisionComponent{ playerObject.get() });
 	playerObject->AddComponent(new PlayerControllerComponent{ playerObject.get() });
-	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get() });
+	const auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get(), true });
 	pMrPepperComponent->AddObserver(pLivesComponent);
 	scene.Add(playerObject, 2);
 
 	return playerObject;
+}
+
+void dae::BurgerTime::AddEnemy(Scene& scene, LivesComponent* pLivesComponent, const glm::vec2& pos) const
+{
+	auto enemyObject = std::make_shared<GameObject>(&scene);
+	enemyObject->AddComponent(new TransformComponent{ enemyObject.get(),pos });
+	enemyObject->AddComponent(new SpriteRenderComponent{ enemyObject.get(), "Idle.png", 1, 1, 3, RenderMode::CenterBottom });
+	enemyObject->AddComponent(new CollisionComponent{ enemyObject.get() });
+	const auto enemyComponent = enemyObject->AddComponent(new EnemyComponent{ enemyObject.get(), false });
+	enemyComponent->AddObserver(pLivesComponent);
+	scene.Add(enemyObject, 2);
 }
 
 std::shared_ptr<dae::GameObject> dae::BurgerTime::AddLivesDisplay(Scene& scene) const
@@ -156,50 +163,57 @@ void dae::BurgerTime::AddPlayerTwo(Scene& scene) const
 	//PlayerOneObject
 	const auto playerObject = std::make_shared<GameObject>(&scene);
 	playerObject->AddComponent(new PlayerControllerComponent{ playerObject.get() });
-	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get() });
+	auto pMrPepperComponent = playerObject->AddComponent(new MrPepperComponent{ playerObject.get(), true });
 	pMrPepperComponent->AddObserver(pLivesComponent);
 	pMrPepperComponent->AddObserver(pScoreComponent);
 	scene.Add(playerObject);
 }
 
-void dae::BurgerTime::AddMap(Scene& scene, GameObject* pPlayerObject, GameObject* scoreObject, const std::string& mapFile) const
+void dae::BurgerTime::LoadMap(Scene& scene, const std::string& mapFile) const
 {
-	auto pScoreComponent = scoreObject->GetComponent<ScoreComponent>();
+	const auto pScoreObject = AddScoreDisplay(scene);
+	const auto pLivesObject = AddLivesDisplay(scene);
+
+	auto pScoreComponent = pScoreObject->GetComponent<ScoreComponent>();
+	auto pLivesComponent = pLivesObject->GetComponent<LivesComponent>();
+
+	std::shared_ptr<GameObject> pPlayerObject;
+
 	auto inputFile = ResourceManager::GetInstance().LoadFile(mapFile);
 	std::string line;
 
-	glm::vec2 startPos;
 	glm::vec2 tileWidth;
 	glm::vec2 tileHeight;
 	glm::vec2 prevPos;
-	TileType tileType{TileType::NormalPlatform};
+	auto tileType{ TileType::NormalPlatform };
+	glm::vec2 startPos;
 
-	if(!inputFile.is_open())
+	if (!inputFile.is_open())
 	{
-		std::cout << "Could not open file: " << "Map_1.txt" << std::endl;
+		std::cout << "Could not open file: " << mapFile << std::endl;
 		return;
 	}
 
-	while(std::getline(inputFile, line))
+	while (std::getline(inputFile, line))
 	{
-		if(line == "TopBun")
+		if (line == "TopBun")
 		{
-			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::TopBun, pPlayerObject, pScoreComponent);
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::TopBun, pPlayerObject.get(), pScoreComponent);
 			continue;
 		}
-		if(line == "Lettuce")
+		if (line == "Lettuce")
 		{
-			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::Lettuce, pPlayerObject, pScoreComponent);
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::Lettuce, pPlayerObject.get(), pScoreComponent);
 			continue;
 		}
 		if (line == "Patty")
 		{
-			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::Patty, pPlayerObject, pScoreComponent);
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::Patty, pPlayerObject.get(), pScoreComponent);
 			continue;
 		}
 		if (line == "BottomBun")
 		{
-			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::BottomBun, pPlayerObject, pScoreComponent);
+			AddIngredient(scene, prevPos + (tileWidth / 2.f), Ingedient::BottomBun, pPlayerObject.get(), pScoreComponent);
 			continue;
 		}
 		if (line == "Plate")
@@ -211,12 +225,12 @@ void dae::BurgerTime::AddMap(Scene& scene, GameObject* pPlayerObject, GameObject
 		std::istringstream lineStream{ line };
 		while (std::getline(lineStream, tempReader, ';'))
 		{
-			if(tempReader == "w" || tempReader == "h" || tempReader == "hw" || tempReader == "b")
+			if (tempReader == "w" || tempReader == "h" || tempReader == "hw" || tempReader == "b" || tempReader == "p" || tempReader == "e")
 			{
 				offsetType = tempReader;
 				continue;
 			}
-			if(tempReader == "NormalPlatform")
+			if (tempReader == "NormalPlatform")
 			{
 				tileType = TileType::NormalPlatform;
 				continue;
@@ -234,45 +248,59 @@ void dae::BurgerTime::AddMap(Scene& scene, GameObject* pPlayerObject, GameObject
 			amount = tempReader;
 		}
 
-		if(offsetType == "b")
+		if (offsetType == "b")
 		{
 			startPos.x = std::stof(amount.substr(0, amount.find(',')));
-			startPos.y = std::stof(amount.substr(amount.find(',')+1));
+			startPos.y = std::stof(amount.substr(amount.find(',') + 1));
 
 			const auto firstPlatform = std::make_shared<GameObject>(&scene);
 			const auto platformTransform = firstPlatform->AddComponent(new TransformComponent{ firstPlatform.get(), startPos });
 			const auto platformRender = firstPlatform->AddComponent(new RenderComponent{ firstPlatform.get(), 3 });
 			firstPlatform->AddComponent(new CollisionComponent{ firstPlatform.get() });
-			firstPlatform->AddComponent(new TileComponent{ firstPlatform.get(), pPlayerObject, tileType });
+			firstPlatform->AddComponent(new TileComponent{ firstPlatform.get(), tileType });
 			scene.Add(firstPlatform);
 
 			tileWidth = glm::vec2{ platformRender->GetTextureWidth(),0 };
 			tileHeight = glm::vec2{ 0,platformRender->GetTextureHeight() };
 
 			prevPos = platformTransform->GetPosition();
+			continue;
 		}
-		if(offsetType == "w")
+		if(offsetType == "p")
 		{
-			prevPos = AddPlatform(scene, prevPos + (tileWidth * std::stof(amount)), tileType, pPlayerObject);
+			pPlayerObject = AddPlayer(scene, pLivesComponent, glm::vec2{ std::stof(amount.substr(0, amount.find(','))) ,std::stof(amount.substr(amount.find(',') + 1)) });
+			continue;
 		}
-		if(offsetType == "h")
+		if (offsetType == "e")
 		{
-			prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + (tileHeight * std::stof(amount)), tileType, pPlayerObject);
+			AddEnemy(scene, pLivesComponent, glm::vec2{ std::stof(amount.substr(0, amount.find(','))) ,std::stof(amount.substr(amount.find(',') + 1)) });
+			continue;
 		}
-		if(offsetType == "hw")
+		if (offsetType == "w")
 		{
-			prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * std::stof(amount)), tileType, pPlayerObject);
+			prevPos = AddPlatform(scene, prevPos + (tileWidth * std::stof(amount)), tileType);
+			continue;
+		}
+		if (offsetType == "h")
+		{
+			prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + (tileHeight * std::stof(amount)), tileType);
+			continue;
+		}
+		if (offsetType == "hw")
+		{
+			prevPos = AddPlatform(scene, glm::vec2{ startPos.x ,prevPos.y } + tileHeight + (tileWidth * std::stof(amount)), tileType);
 		}
 	}
+	ServiceLocator::GetAudioSystem().PlaySound("Main_Track.mp3", true);
 }
 
-glm::vec2 dae::BurgerTime::AddPlatform(Scene& scene, const glm::vec2& pos, TileType type, GameObject* pPlayerObject) const
+glm::vec2 dae::BurgerTime::AddPlatform(Scene& scene, const glm::vec2& pos, TileType type) const
 {
 	const auto platform = std::make_shared<GameObject>(&scene);
 	const auto platformTransform = platform->AddComponent(new TransformComponent{ platform.get(), pos });
 	platform->AddComponent(new RenderComponent{ platform.get(), 3 });
 	platform->AddComponent(new CollisionComponent{ platform.get() });
-	platform->AddComponent(new TileComponent{ platform.get(), pPlayerObject, type });
+	platform->AddComponent(new TileComponent{ platform.get(), type });
 	scene.Add(platform);
 
 	return platformTransform->GetPosition();

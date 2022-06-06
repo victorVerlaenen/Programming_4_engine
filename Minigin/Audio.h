@@ -18,6 +18,7 @@ namespace dae
 		void Load() const;
 
 		void SetVolume(int volume);
+		void SetLooped(bool looped);
 		int GetVolume() const;
 		bool IsLoaded() const;
 	private:
@@ -40,10 +41,12 @@ namespace dae
 		void Load();
 
 		void SetVolume(int volume);
+		void SetLooped(bool looped);
 		int GetVolume() const;
 		bool IsLoaded() const;
 	private:
 		Mix_Chunk* m_pMixChunk{};
 		std::string m_FilePath;
+		bool m_Looped{ false };
 	};
 }

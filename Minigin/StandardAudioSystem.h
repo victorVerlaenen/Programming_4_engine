@@ -14,7 +14,7 @@ namespace dae
 		StandardAudioSystem& operator=(const StandardAudioSystem& other) = delete;
 		StandardAudioSystem& operator=(StandardAudioSystem&& other) noexcept = delete;
 
-		void PlaySound(const std::string& filePath) override;
+		void PlaySound(const std::string& filePath, bool looped, int volume) override;
 		void CheckQueue() override;
 	};
 }

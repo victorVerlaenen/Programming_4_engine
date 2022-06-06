@@ -8,7 +8,7 @@
 
 std::vector<dae::TileComponent*> dae::TileComponent::m_pTileComponents = {};
 
-dae::TileComponent::TileComponent(GameObject* pOwner, GameObject* pPlayerObject, TileType tileType)
+dae::TileComponent::TileComponent(GameObject* pOwner, TileType tileType)
 	:Component(pOwner)
 	, m_pCollisionComponent(pOwner->GetComponent<CollisionComponent>())
 	, m_pRenderComponent(pOwner->GetComponent<RenderComponent>())
@@ -28,47 +28,66 @@ dae::TileComponent::TileComponent(GameObject* pOwner, GameObject* pPlayerObject,
 		m_pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Ladder.png"));
 		break;
 	}
-	
-	m_pPlayerCollisionComponent = pPlayerObject->GetComponent<CollisionComponent>();
-	m_pPlayerTransformComponent = pPlayerObject->GetComponent<TransformComponent>();
-	m_pMrPepperComponent = pPlayerObject->GetComponent<MrPepperComponent>();
 
+	for(const auto actorComponent : ActorComponent::m_pActorComponents)
+	{
+		m_pActorColliders.push_back(actorComponent->GetCollider());
+		m_pActorTransformComponents.push_back(actorComponent->GetTransform());
+	}
 	m_pTileComponents.push_back(this);
 }
 
 void dae::TileComponent::Update()
 {
-	m_pMrPepperComponent->SetIsOnLadder(false);
-	m_pMrPepperComponent->SetIsGrounded(false);
-	m_pMrPepperComponent->SetColliding(false);
-	m_pMrPepperComponent->SetCantClimbDown(true);
+	for(const auto actorComponent : ActorComponent::m_pActorComponents)
+	{
+		actorComponent->SetIsOnLadder(false);
+		actorComponent->SetIsGrounded(false);
+		actorComponent->SetColliding(false);
+		actorComponent->SetCantClimbDown(true);
+		actorComponent->SetCantClimbUp(true);
+		actorComponent->SetIsPastPlatform(true);
+	}
 }
 
 void dae::TileComponent::LateUpdate()
 {
-	if (m_pCollisionComponent->IsOverlapping(m_pPlayerCollisionComponent->GetShape()))
+	for (size_t i{}; i < ActorComponent::m_pActorComponents.size(); ++i)
 	{
-		if (m_TileType != TileType::Ladder)
+		if(m_pCollisionComponent->IsOverlapping(m_pActorTransformComponents[i]->GetPosition()))
 		{
-
-			if (std::abs(m_pPlayerTransformComponent->GetPosition().y - m_pCollisionComponent->GetShape().yPos) <= GetPlatformMargin() * 2)
+			ActorComponent::m_pActorComponents[i]->SetIsPastPlatform(false);
+			ActorComponent::m_pActorComponents[i]->SetFixPosition(m_pActorTransformComponents[i]->GetPosition());
+		}
+		if (m_pCollisionComponent->IsOverlapping(m_pActorColliders[i]->GetShape()))
+		{
+			if (m_TileType != TileType::Ladder)
 			{
-				if (m_TileType == TileType::LadderPlatform)
+
+				if (std::abs(m_pActorTransformComponents[i]->GetPosition().y - static_cast<float>(m_pCollisionComponent->GetShape().yPos)) <= GetPlatformMargin() * 2)
 				{
-					m_pMrPepperComponent->SetCantClimbDown(false);//
+					if (m_TileType == TileType::LadderPlatform)
+					{
+						ActorComponent::m_pActorComponents[i]->SetCantClimbDown(false);//
+					}
+					
+					ActorComponent::m_pActorComponents[i]->SetIsGrounded(true);//
+					ActorComponent::m_pActorComponents[i]->SetGroundYPos(static_cast<float>(m_pCollisionComponent->GetShape().yPos + GetPlatformMargin()));
 				}
-				m_pMrPepperComponent->SetIsGrounded(true);//
-				m_pMrPepperComponent->SetGroundYPos(static_cast<float>(m_pCollisionComponent->GetShape().yPos + GetPlatformMargin()));
 			}
-		}
-
-		if (m_TileType == TileType::LadderPlatform || m_TileType == TileType::Ladder)
-		{
-			if (m_pCollisionComponent->IsBetween(m_pPlayerCollisionComponent->GetShape(), 8))
+			else
 			{
-				m_pMrPepperComponent->SetIsOnLadder(true);//
+				ActorComponent::m_pActorComponents[i]->SetCantClimbUp(false);//
 			}
+
+			if (m_TileType == TileType::LadderPlatform || m_TileType == TileType::Ladder)
+			{
+				if (m_pCollisionComponent->IsBetween(m_pActorColliders[i]->GetShape(), 8))
+				{
+					ActorComponent::m_pActorComponents[i]->SetIsOnLadder(true);//
+				}
+			}
+			ActorComponent::m_pActorComponents[i]->SetColliding(true);//
 		}
-		m_pMrPepperComponent->SetColliding(true);//
 	}
 }

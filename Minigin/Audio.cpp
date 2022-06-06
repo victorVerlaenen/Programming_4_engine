@@ -20,7 +20,7 @@ dae::Audio::~Audio()
 
 dae::Audio::AudioImpl::~AudioImpl()
 {
-	if(m_pMixChunk != nullptr)
+	if (m_pMixChunk != nullptr)
 	{
 		Mix_FreeChunk(m_pMixChunk);
 	}
@@ -33,9 +33,13 @@ void dae::Audio::Play() const
 
 void dae::Audio::AudioImpl::Play()
 {
-	if(IsLoaded() == false)
+	if (IsLoaded() == false)
 	{
 		return;
+	}
+	if (m_Looped == true)
+	{
+		Mix_PlayChannel(-1, m_pMixChunk, -1);
 	}
 	Mix_PlayChannel(-1, m_pMixChunk, 0);
 }
@@ -56,13 +60,24 @@ void dae::Audio::SetVolume(int volume)
 	pImlp->SetVolume(volume);
 }
 
+void dae::Audio::SetLooped(bool looped)
+{
+	pImlp->SetLooped(looped);
+}
+
+void dae::Audio::AudioImpl::SetLooped(bool looped)
+{
+	m_Looped = looped;
+}
+
 void dae::Audio::AudioImpl::SetVolume(int volume)
 {
-	if(IsLoaded())
+	if (IsLoaded())
 	{
 		Mix_Volume(-1, volume);
 	}
 }
+
 
 int dae::Audio::GetVolume() const
 {
@@ -71,7 +86,7 @@ int dae::Audio::GetVolume() const
 
 int dae::Audio::AudioImpl::GetVolume() const
 {
-	if(IsLoaded())
+	if (IsLoaded())
 	{
 		return Mix_VolumeChunk(m_pMixChunk, -1);
 	}
@@ -85,7 +100,7 @@ bool dae::Audio::IsLoaded() const
 
 bool dae::Audio::AudioImpl::IsLoaded() const
 {
-	if(m_pMixChunk != nullptr)
+	if (m_pMixChunk != nullptr)
 	{
 		return true;
 	}

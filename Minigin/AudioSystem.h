@@ -11,7 +11,13 @@ namespace dae
 	public:
 		AudioSystem() = default;
 		virtual ~AudioSystem() = default;
-		virtual void PlaySound(const std::string& filePath) = 0;
+
+		AudioSystem(const AudioSystem& other) = delete;
+		AudioSystem(AudioSystem&& other) noexcept = delete;
+		AudioSystem& operator=(const AudioSystem& other) = delete;
+		AudioSystem& operator=(AudioSystem&& other) noexcept = delete;
+
+		virtual void PlaySound(const std::string& filePath, bool looped, int volume = -1) = 0;
 		virtual void CheckQueue() = 0;
 	protected:
 		std::vector<Audio*> m_PlayedSounds{};//This is to delete the sounds

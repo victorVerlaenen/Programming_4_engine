@@ -15,5 +15,4 @@ dae::DieCommand::DieCommand(GameObject* actor)
 void dae::DieCommand::Execute()
 {
 	GetActor()->GetComponent<MrPepperComponent>()->Notify(GetActor(), Observer::Event::EVENT_ACTOR_DIED);
-	ServiceLocator::GetAudioSystem().PlaySound("Lose_Life.mp3");
 }

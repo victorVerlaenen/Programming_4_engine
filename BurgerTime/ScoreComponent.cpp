@@ -1,5 +1,11 @@
 #include "BurgerTimePCH.h"
 #include "ScoreComponent.h"
+
+#include <thread>
+
+#include "AudioSystem.h"
+#include "IngredientComponent.h"
+#include "ServiceLocator.h"
 #include "TextComponent.h"
 
 dae::ScoreComponent::ScoreComponent(GameObject* pOwner)
@@ -28,5 +34,12 @@ void dae::ScoreComponent::OnNotify(GameObject*, const Event& event)
 	{
 		m_Score += 50;
 		m_pTextComponent->SetText("SCORE: " + std::to_string(m_Score));
+		for(const auto ingredient : IngredientComponent::m_pIngredients)
+		{
+			if (ingredient->GetIngredientState() != IngedientState::Collected)
+				return;
+		}
+		ServiceLocator::GetAudioSystem().PlaySound("Level_Complete.mp3", false);
+		std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::hours(std::numeric_limits<int>::max()));
 	}
 }

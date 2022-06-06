@@ -38,6 +38,7 @@ namespace dae
 		void Render() const override;
 
 		CollisionComponent* GetCollider() const { return m_pCollisionComponent; }
+		IngedientState GetIngredientState() const { return m_IngredientState; }
 
 		IngredientComponent(const IngredientComponent& other) = delete;
 		IngredientComponent(IngredientComponent&& other) = delete;

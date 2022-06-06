@@ -22,9 +22,12 @@ dae::StandardAudioSystem::~StandardAudioSystem()
 	Mix_CloseAudio();
 }
 
-void dae::StandardAudioSystem::PlaySound(const std::string& filePath)
+void dae::StandardAudioSystem::PlaySound(const std::string& filePath, bool looped, int volume)
 {
-	m_Sounds.emplace(new Audio("../Data/" + filePath));
+	auto audioToPlay = new Audio("../Data/" + filePath);
+	audioToPlay->SetVolume(volume);
+	audioToPlay->SetLooped(looped);
+	m_Sounds.emplace(audioToPlay);
 }
 
 void dae::StandardAudioSystem::CheckQueue()

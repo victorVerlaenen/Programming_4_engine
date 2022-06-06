@@ -56,22 +56,18 @@ void dae::IngredientComponent::Update()
 		{
 			if (m_pPlayerCollisionComponent->IsBetween(m_LeftPiece))
 			{
-				std::cout << "Left\n";
 				m_LeftWalked = true;
 			}
 			if (m_pPlayerCollisionComponent->IsBetween(m_MiddleLeftPiece))
 			{
-				std::cout << "MiddleLeft\n";
 				m_MiddleLeftWalked = true;
 			}
 			if (m_pPlayerCollisionComponent->IsBetween(m_MiddleRightPiece))
 			{
-				std::cout << "MiddleRight\n";
 				m_MiddleRightWalked = true;
 			}
 			if (m_pPlayerCollisionComponent->IsBetween(m_RightPiece))
 			{
-				std::cout << "Right\n";
 				m_RightWalked = true;
 			}
 		}
@@ -88,7 +84,7 @@ void dae::IngredientComponent::Update()
 
 		m_pTransformComponent->Translate(glm::vec2{ 0, 80 * Clock::GetInstance().GetDeltaTime() });
 		m_Timer += Clock::GetInstance().GetDeltaTime();
-		for (auto tileComp : TileComponent::m_pTileComponents)
+		for (const auto tileComp : TileComponent::m_pTileComponents)
 		{
 			if (tileComp->GetTileType() == TileType::Ladder)
 			{

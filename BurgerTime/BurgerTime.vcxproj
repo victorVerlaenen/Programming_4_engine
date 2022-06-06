@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="BurgerTimePCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -175,6 +176,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="EnemyComponent.cpp" />
+    <ClCompile Include="EnemyMoveState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="DieCommand.cpp" />
     <ClCompile Include="IdleState.cpp" />
@@ -191,10 +194,13 @@
     <ClCompile Include="StopCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="BurgerTime.h" />
     <ClInclude Include="BurgerTimePCH.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="DieCommand.h" />
+    <ClInclude Include="EnemyComponent.h" />
+    <ClInclude Include="EnemyMoveState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="IngredientComponent.h" />
     <ClInclude Include="LivesComponent.h" />
@@ -204,6 +210,7 @@
     <ClInclude Include="PhysicsBodyComponent.h" />
     <ClInclude Include="PlateComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="PointsCommand.h" />
     <ClInclude Include="StopCommand.h" />

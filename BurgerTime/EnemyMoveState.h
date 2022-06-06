@@ -1,3 +1,4 @@
+
 #pragma once
 #include "MoveCommand.h"
 #include "State.h"
@@ -8,10 +9,10 @@ namespace dae
 	class TransformComponent;
 	class Texture2D;
 
-	class MoveState : public State
+	class EnemyMoveState : public State
 	{
 	public:
-		MoveState(GameObject* pOwner, MoveDirection moveDirection, float moveSpeed);
+		EnemyMoveState(GameObject* pOwner, MoveDirection moveDirection, float moveSpeed);
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
 		virtual void Update() override;

@@ -19,7 +19,7 @@ namespace dae
 	{
 		friend void MrPepperComponent::Update();
 	public:
-		TileComponent(GameObject*, GameObject* pPlayerObject, TileType tileType);
+		TileComponent(GameObject*, TileType tileType);
 		~TileComponent() override = default;
 		
 		void Update() override;
@@ -41,9 +41,8 @@ namespace dae
 		CollisionComponent* m_pCollisionComponent;
 		RenderComponent* m_pRenderComponent;
 
-		CollisionComponent* m_pPlayerCollisionComponent;
-		TransformComponent* m_pPlayerTransformComponent;
-		MrPepperComponent* m_pMrPepperComponent;
+		std::vector <CollisionComponent*> m_pActorColliders;
+		std::vector <TransformComponent*> m_pActorTransformComponents;
 
 		TileType m_TileType;
 		const int m_PlatformMargin = {10};
